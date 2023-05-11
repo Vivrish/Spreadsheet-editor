@@ -1,0 +1,6 @@
+#ifndef SEMESTRALWORK_BUTTON_H
+#define SEMESTRALWORK_BUTTON_H
+class Button {
+
+};
+#endif //SEMESTRALWORK_BUTTON_H
