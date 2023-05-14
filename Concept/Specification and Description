@@ -1,0 +1,56 @@
+Typ projektu: Tabulkový editor
+
+Specifikace:
+
+Tabulkový editor podobný Exelu bude využívat uživatelské rozhraní pomocí knihovny SDL. Velikost okna bude konstantní a
+určena v konfiguračním souboru. Velikost buněk také bude konstantní, ale bude záviset na velikosti okna. V jednu chvíli
+bude zobrazováno v okně 10x10 buněk. Bude implementován scroll pomocí tlačítek nahoru a dolů. Uživatel bude mít k
+dispozici tlačítka "Vybrat formát", "Změnit typ", "Uložit", "Vyčistit", "Vyčistit vše", "Ukončit",
+"Otevřít novou tabulku". V konfiguračním souboru bude možné nastavit cestu, kde bude soubor uložen
+ve formátu <název tabulky>.csv. Název tabulky bude také zadan přes konfigurační soubor. Na rozdíl od Exelu,
+řádky a sloupce budou vždy reprezentovány číslem (řádek:sloupec <-> např. 516:32). Počet buněk bude
+konstantní (1000x1000). Uživatel bude moci zadávat různé funkce v buňkách (Sin, Cos, Strip, PadLeft,
+PadRight, $<jiná buňka>, atd.). Podporované operace zahrnují: string + string, string + numeric (= string),
+numeric + numeric, numeric - numeric, string * numeric, numeric / numeric. Všechny operátory a funkce podporují
+vnořování a závorky. Řetězce jsou vždy označeny symboly "". Práce s daty, časem, booleany, celými a desetinnými
+čísly bude možná. Program nedovolí vytváření smyček při odkazování na jiné
+buňky (např. 12:10 má v sobě $12:11 a 12:11 má $12:10).
+
+Tabulka:
+Tabulka je reprezentována třídou Spreadsheet. Tato třída obsahuje vektor vektorů typu CellDataType, což je abstraktní
+třída s dvěma potomky: Numeric a String. Numeric obsahuje hodnotu typu double, kterou můžeme interpretovat jako pět
+různých typů: Integer (zaokrouhlené nahoru), Float, Boolean (1 je True, ostatní jsou False), Date (juliánské datum)
+a Time (čas v sekundách). String obsahuje neočekávaně řetězec, který můžeme formátovat pomocí tříd pro zarovnání
+zleva (PadLeftString) a zprava (PadRightString), odstraněním mezer (MaxOneSpaceString), odstraněním bílých
+znaků (StrippedString) nebo nechat bez úpravy (PureString).
+
+Polymorfismus se objevuje na dvou místech: třída Spreadsheet pracuje s CellDataType, ale využívá Numeric a String.
+Dále máme hlavní třídu FormatType, která je rodičem všech formátů pro Stringy a Numeric. Nezáleží na tom, s jakým typem
+formátu pracujeme, jednoduše zavoláme abstraktní metodu format().
+
+Standardní situace:
+Výchozí formátování je nastaveno na PureString a Integer. Pokud uživatel chce jiný formát, musí jej zadat ručně.
+
+Typy buněk se automaticky nastavují podle vstupu (např. "12:00:00" je Numeric, ale "12:00:00a" je již String). Uživatel
+však má možnost ručně změnit typ buněk pomocí metody ForceChangeType v třídě Spreadsheet.
+
+Parsování:
+Pro parsování řetězců jsme vytvořili třídu StringParser, která obsahuje algoritmus Shunting Yard, který vrací stack
+operátorů a frontu typu CellDataType. Tento postup používáme pro vyhodnocení výrazů v buňkách.
+
+Operátory:
+Operátor je samostatná abstraktní třída, která má mnoho potomků. Na začátku jsou dva přímí potomci - UnaryOperator
+a BinaryOperator. Od UnaryOperatoru se dědí třída Formula. Dále jsou zde třídy Sin, Cos, Strip a také CellReference,
+což znamená, že potřebujeme speciální znak pro začátek referencí (v našem případě $). CellReference má za sebou ukazatel
+na buňku, takže pokud změníme tuto buňku, všechny buňky, které na ni odkazují, budou změněny. Nyní se vraťme k
+BinaryOperatoru: od něho dědí třídy Plus, Minus, Multiply a Divide. Zde se opět používá polymorfismus - zadáváme
+argumenty typu String nebo Numeric pomocí abstraktní metody addArgument v Operatoru. Poté musíme pouze vyhodnotit výraz
+podle našich požadavků (+, -, Sin...) pomocí také abstraktní metody calculate(). To bude použito pro hodnocení výrazů
+buněk v SpreadSheetu (parser vrací stack typu Operator, ale v podstatě tam mohou být jakékoli třídy-potomci).
+
+Formátování:
+Pro formátování máme také třídy s mnoha potomky: FormatType se dělí na NumericFormatType (Time, Date, Boolean,
+Integer, Float) a StringFormatType (PadLeftString, PadRightString, StrippedString, MaxOneSpaceString a PureString).
+FormatType má abstraktní metodu format(), která vrací nám hodnotu v požadovaném formátu.
+
+V stejném souboru můžete také najít diagram, přibližně reprezentující strukturu programu.

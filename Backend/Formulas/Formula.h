@@ -1,29 +1,33 @@
 #ifndef SEMESTRALWORK_FORMULA_H
 #define SEMESTRALWORK_FORMULA_H
-#include "../CellDataType.h"
-#include "../StoredData.h"
 
-class Formula: public CellDataType{
-public:
-    virtual CellDataType evaluate() = 0;
-
-    CellDataType * getValue() override = 0;
-
-    StoredData returnType = StoredData::Unknown;
+#include "../Operators/Operator.h"
+#include "../CellData/Cell.h"
+class Formula: public UnaryOperator {
+    String calculateStr() override = 0;
+    Numeric calculateNum() override = 0;
 };
 
-class Sin: public Formula {
-public:
-    StoredData returnType = StoredData::Number;
+class Sin: public UnaryOperator {
+    String calculateStr() final;
+    Numeric calculateNum() final;
+};
 
-    Sin(double pArgument);
+class Cos: public UnaryOperator {
+    String calculateStr() final;
+    Numeric calculateNum() final;
+};
 
-    CellDataType evaluate() override;
+class Strip: public UnaryOperator {
+    String calculateStr() final;
+    Numeric calculateNum() final;
+};
 
-    CellDataType * getValue() final;
+class CellReference: public UnaryOperator {
+    String calculateStr() final;
+    Numeric calculateNum() final;
+
 private:
-    double argument;
+    Cell* cellPointer;
 };
-
-
 #endif //SEMESTRALWORK_FORMULA_H

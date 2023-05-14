@@ -7,57 +7,32 @@
 #include <unordered_map>
 
 class FileHandler {
-    FileHandler(const std::string & pPath);
+public:
+    FileHandler(const std::string & pPath, bool isInput);
 
     bool open();
 
     bool close();
 
-protected:
+
     std::string path;
+    std::fstream inFile;
+    std::ofstream outFile;
 };
 
-class InputFileHandler: public FileHandler {
+class CSVFileHandler: public FileHandler {
 
-    bool makeCopy(std::string path);
+    std::vector<std::vector<std::string>> importAsVector();
 
-    virtual bool read();
+    bool exportAsVector();
 
-protected:
-    std::ostream file;
-};
-
-class OutputFileHandler: FileHandler {
-public:
-    bool create();
-protected:
-    std::fstream file;
-};
-
-class OutputCSVHandler: public OutputFileHandler {
-
-    bool write(std::vector<std::vector<std::string>> table);
-
-};
-
-class InputCSVHandler: public InputFileHandler {
-public:
-    std::vector<std::vector<std::string>> importAsVector() const;
-
-    bool makeVector();
-
-protected:
+private:
     std::vector<std::vector<std::string>> table;
 };
+class ConfigFileHandler: public FileHandler {
 
-class ConfigHandler: public InputFileHandler{
-public:
-    std::unordered_map<std::string, std::string> importAsMap() const;
+    std::unordered_map<std::string, std::string> importAsMap();
 
-    bool makeMap();
-
-protected:
-    std::unordered_map<std::string, std::string> config;
 };
 
 

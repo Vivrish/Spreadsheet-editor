@@ -1,49 +1,50 @@
 #ifndef SEMESTRALWORK_OPERATOR_H
 #define SEMESTRALWORK_OPERATOR_H
-#include "../CellDataType.h"
+#include "../CellData/CellDataType.h"
+#include <string>
+#include <vector>
 class Operator {
-    virtual PureString calculate(const PureString & one, const PureString & other);
-    virtual Number calculate(const Number & one, const Number & other);
-    virtual Boolean calculate(const Boolean & one, const Boolean & other);
-    virtual Date calculate(const Date & one, const Date & other);
-    virtual Time calculate(const Time & one, const Time & other);
+public:
+    bool addArgument(double argument);
+    bool addArgument(const std::string & argument);
+
+    virtual String calculateStr() = 0;
+    virtual Numeric calculateNum() = 0;
+
+protected:
+    std::string signature;
+    std::vector<double> numArgs;
+    std::vector<std::string> strArgs;
 };
 
-class Plus: public Operator {
-    PureString calculate(const PureString & one, const PureString & other) final;
-    Number calculate(const Number & one, const Number & other) final;
-    Boolean calculate(const Boolean & one, const Boolean & other) final;
-    Date calculate(const Date & one, const Date & other) final;
-    Time calculate(const Time & one, const Time & other) final;
+class BinaryOperator: public Operator {
+public:
+    String calculateStr() override = 0;
+    Numeric calculateNum() override = 0;
 };
 
-class Multiply: public Operator {
-    PureString calculate(const PureString & one, const PureString & other) final;
-    Number calculate(const Number & one, const Number & other) final;
-    Boolean calculate(const Boolean & one, const Boolean & other) final;
-    Date calculate(const Date & one, const Date & other) final;
-    Time calculate(const Time & one, const Time & other) final;
+class Plus: public BinaryOperator {
+public:
+    String calculateStr() override;
+    Numeric calculateNum() override;
 };
 
-class Divide: public Operator {
-    Number calculate(const Number & one, const Number & other) final;
-    Date calculate(const Date & one, const Date & other) final;
+class Multiply: public BinaryOperator {
+public:
+    String calculateStr() override;
+    Numeric calculateNum() override;
 };
 
-class And: public Operator {
-    PureString calculate(const PureString & one, const PureString & other) final;
-    Number calculate(const Number & one, const Number & other) final;
-    Boolean calculate(const Boolean & one, const Boolean & other) final;
-    Date calculate(const Date & one, const Date & other) final;
-    Time calculate(const Time & one, const Time & other) final;
+class Divide: public BinaryOperator {
+public:
+    String calculateStr() override;
+    Numeric calculateNum() override;
 };
 
-class Or: public Operator {
-    PureString calculate(const PureString & one, const PureString & other) final;
-    Number calculate(const Number & one, const Number & other) final;
-    Boolean calculate(const Boolean & one, const Boolean & other) final;
-    Date calculate(const Date & one, const Date & other) final;
-    Time calculate(const Time & one, const Time & other) final;
+class UnaryOperator: public Operator {
+    String calculateStr() override = 0;
+    Numeric calculateNum() override = 0;
 };
+
 
 #endif //SEMESTRALWORK_OPERATOR_H

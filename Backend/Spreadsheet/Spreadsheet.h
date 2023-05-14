@@ -4,8 +4,11 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
-#include "CellDataType.h"
-#include "File Manipulations/FileHandler.h"
+#include "../CellData/CellDataType.h"
+#include "../File Manipulations/FileHandler.h"
+#include "../CellData/FormatType.h"
+#include "../Parcing/StringParser.h"
+
 
 class Spreadsheet {
 public:
@@ -13,7 +16,7 @@ public:
 
     Spreadsheet(std::map<std::pair<int, int>, CellDataType>);
 
-    Spreadsheet(const FileHandler & fileHandler);
+    Spreadsheet(const InputCSVHandler & fileHandler);
 
     CellDataType * getData(std::pair<int, int> position);
 
@@ -23,12 +26,16 @@ public:
 
     void clear();
 
-    bool cycleCheck(std::pair<int, int>, std::unordered_set<std::pair<int, int>> traceback);
+    bool cycleCheck(std::pair<int, int> pos, std::unordered_set<std::pair<int, int>> traceback);
+
+    bool chooseFormat(std::pair<int, int> pos, FormatType * newFormat);
+
+    bool forceChangeType(std::pair<int, int> pos, CellDataType newType);
 
     friend std::ostream operator << (std::ostream & os, const Spreadsheet & spreadsheet);
 
 private:
     std::vector<std::vector<CellDataType>> cells;
-
+    StringParser stringParser;
 };
 #endif //SEMESTRALWORK_SPREADSHEET_H
