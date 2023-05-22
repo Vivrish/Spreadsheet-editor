@@ -6,30 +6,48 @@
 #include <vector>
 #include <unordered_map>
 
-class FileHandler {
+class InputFileHandler {
 public:
-    FileHandler(const std::string & pPath, bool isInput);
-
-    bool open();
+    explicit InputFileHandler(const std::string & pPath);
 
     bool close();
 
-
-    std::string path;
+    bool open();
+protected:
+    std::string inPath;
     std::fstream inFile;
-    std::ofstream outFile;
+
 };
 
-class CSVFileHandler: public FileHandler {
+class OutputFileHandler {
+public:
+    explicit OutputFileHandler(const std::string & pPath);
 
+    bool create();
+
+    bool shut();
+
+protected:
+    std::string outPath;
+    std::fstream outFile;
+};
+
+class CSVFileHandler: public InputFileHandler, public OutputFileHandler {
+public:
+    CSVFileHandler(const std::string & pInPath, const std::string & pOutPath);
     std::vector<std::vector<std::string>> importAsVector();
-
-    bool exportAsVector();
+    bool exportAsVector(const std::vector<std::vector<std::string>>& table);
+    void setDelimiter(const char & delim);
+    void switchToOutMode(const std::string & pOutPath);
 
 private:
-    std::vector<std::vector<std::string>> table;
+    char delimiter = ',';
+    bool inputMode;
 };
-class ConfigFileHandler: public FileHandler {
+class ConfigFileHandler: public InputFileHandler {
+public:
+
+    explicit ConfigFileHandler(const std::string & pInPath);
 
     std::unordered_map<std::string, std::string> importAsMap();
 

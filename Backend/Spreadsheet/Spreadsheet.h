@@ -8,7 +8,7 @@
 #include "../File Manipulations/FileHandler.h"
 #include "../CellData/FormatType.h"
 #include "../Parcing/StringParser.h"
-
+#include "../CellData/Cell.h"
 
 class Spreadsheet {
 public:
@@ -16,7 +16,7 @@ public:
 
     Spreadsheet(std::map<std::pair<int, int>, CellDataType>);
 
-    Spreadsheet(const InputCSVHandler & fileHandler);
+    Spreadsheet(const CSVFileHandler & fileHandler);
 
     CellDataType * getData(std::pair<int, int> position);
 
@@ -35,7 +35,7 @@ public:
     friend std::ostream operator << (std::ostream & os, const Spreadsheet & spreadsheet);
 
 private:
-    std::vector<std::vector<CellDataType>> cells;
+    std::vector<std::vector<Cell>> cells;
     StringParser stringParser;
 };
 #endif //SEMESTRALWORK_SPREADSHEET_H
