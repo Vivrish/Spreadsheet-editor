@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_set>
 #include <vector>
+#include <memory>
 #include "../CellData/CellDataType.h"
 #include "../File Manipulations/FileHandler.h"
 #include "../CellData/FormatType.h"
@@ -12,17 +13,16 @@
 
 class Spreadsheet {
 public:
-    Spreadsheet(const Spreadsheet & source);
 
-    Spreadsheet(std::map<std::pair<int, int>, CellDataType>);
+    Spreadsheet(const std::map<std::pair<int, int>, std::shared_ptr<CellDataType>> & input);
 
     Spreadsheet(const CSVFileHandler & fileHandler);
 
-    CellDataType * getData(std::pair<int, int> position);
+    std::shared_ptr<CellDataType> getData(const std::pair<int, int> & position);
 
-    void addData(std::pair<int, int> position, const CellDataType & value);
+    void addData(const std::pair<int, int> & position, const CellDataType & value);
 
-    void save(FileHandler fileHandler);
+    void save(OutputFileHandler fileHandler);
 
     void clear();
 

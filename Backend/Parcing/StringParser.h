@@ -5,16 +5,21 @@
 #include <stack>
 #include <queue>
 #include <string>
+#include <unordered_map>
 
 class StringParser {
 
-    bool parse(const std::string & input);
+    void parseAsNumeric(const std::string & input);
 
-    bool scoopCellReferences(const std::string & input);
+    void parseAsString(const std::string & input);
+
+    std::unordered_map<std::string, std::string> scoopCellReferences(const std::string & input);
 
     [[nodiscard]] std::stack<CellDataType> getTokens() const;
 
     [[nodiscard]] std::queue<CellDataType> getOutput() const;
+
+    [[nodiscard]] std::string getResult() const;
 
 private:
     std::stack<Operator> tokens;

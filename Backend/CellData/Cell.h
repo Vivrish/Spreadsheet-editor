@@ -3,26 +3,27 @@
 #include "CellDataType.h"
 #include "StoredData.h"
 #include "FormatType.h"
+#include <memory>
+
 
 class Cell {
-    Cell(int row, int column, const CellDataType & pValue);
-    Cell(const Cell & source);
+    Cell(int row, int column, const std::shared_ptr<CellDataType>& pValue);
 
     bool evaluateExpression();
 
-    bool formatExpression();
+    void formatExpression();
+
+    void setFormat(const std::shared_ptr<FormatType> & newFormat);
 
     void setType();
 
-    void setFormat();
-
-    std::string getOutput() const;
+    [[nodiscard]] std::string getOutput() const;
 
 private:
     std::pair<int, int> position;
-    CellDataType * value;
-    FormatType * formatType;
-    StoredData type;
+    std::shared_ptr<CellDataType> value;
+    std::shared_ptr<FormatType> formatType;
+    StoredData type = StoredData::Unknown;
     std::string output;
 };
 

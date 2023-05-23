@@ -79,6 +79,114 @@ build CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/OutputFileHandler.
   OBJECT_DIR = CMakeFiles/SemestralWork.dir
   OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/File_Manipulations
 
+build CMakeFiles/SemestralWork.dir/Backend/Spreadsheet/Spreadsheet.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/Spreadsheet/Spreadsheet.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/Spreadsheet/Spreadsheet.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/Spreadsheet
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/Cell.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/Cell.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/Cell.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/FormatType.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/FormatType.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/FormatType.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/NumericFormatType.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/NumericFormats/NumericFormatType.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/NumericFormatType.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Time.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/NumericFormats/Time.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Time.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Date.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/NumericFormats/Date.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Date.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Boolean.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/NumericFormats/Boolean.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Boolean.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Integer.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/NumericFormats/Integer.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Integer.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Float.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/NumericFormats/Float.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Float.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PadLeftString.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/StringFormats/PadLeftString.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PadLeftString.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PadRightString.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/StringFormats/PadRightString.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PadRightString.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/MaxOneSpaceString.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/StringFormats/MaxOneSpaceString.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/MaxOneSpaceString.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/StrippedString.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/StringFormats/StrippedString.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/StrippedString.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PureString.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/StringFormats/PureString.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PureString.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/StringFormatType.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/StringFormats/StringFormatType.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/StringFormatType.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/CellDataType.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/CellDataType.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/CellDataType.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/String.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/String.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/String.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData
+
+build CMakeFiles/SemestralWork.dir/Backend/CellData/Numeric.cpp.o: CXX_COMPILER__SemestralWork_Debug /home/nikolai/CLionProjects/SemestralWork/Backend/CellData/Numeric.cpp || cmake_object_order_depends_target_SemestralWork
+  DEP_FILE = CMakeFiles/SemestralWork.dir/Backend/CellData/Numeric.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/SemestralWork.dir
+  OBJECT_FILE_DIR = CMakeFiles/SemestralWork.dir/Backend/CellData
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target SemestralWork
@@ -87,7 +195,7 @@ build CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/OutputFileHandler.
 #############################################
 # Link the executable SemestralWork
 
-build SemestralWork: CXX_EXECUTABLE_LINKER__SemestralWork_Debug CMakeFiles/SemestralWork.dir/main.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/CSVFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/InputFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/ConfigFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/OutputFileHandler.cpp.o
+build SemestralWork: CXX_EXECUTABLE_LINKER__SemestralWork_Debug CMakeFiles/SemestralWork.dir/main.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/CSVFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/InputFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/ConfigFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/OutputFileHandler.cpp.o CMakeFiles/SemestralWork.dir/Backend/Spreadsheet/Spreadsheet.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/Cell.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/FormatType.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/NumericFormatType.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Time.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Date.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Boolean.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Integer.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/NumericFormats/Float.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PadLeftString.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PadRightString.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/MaxOneSpaceString.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/StrippedString.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/PureString.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/StringFormats/StringFormatType.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/CellDataType.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/String.cpp.o CMakeFiles/SemestralWork.dir/Backend/CellData/Numeric.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/SemestralWork.dir
   POST_BUILD = :

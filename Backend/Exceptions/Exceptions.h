@@ -12,4 +12,6 @@ class CannotCreateTheFileException: public std::exception {};
 class FileAlreadyOpenedException: public std::exception {};
 
 class BadConfigFormatException: public std::exception {};
+
+class IncorrectCalculationException: public std::exception {};
 #endif //SEMESTRALWORK_EXCEPTIONS_H
