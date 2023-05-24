@@ -3,6 +3,10 @@
 #include <string>
 #include "../../Exceptions/Exceptions.h"
 
+using namespace std;
+
+Time::Time(const std::string &pRawValue): NumericFormatType(pRawValue) {}
+
 void Time::format() {
     int result = (int) floor(rawNumericValue);
     int hours = result / 3600;
@@ -14,3 +18,8 @@ void Time::format() {
         throw IncorrectCalculationException();
     formattedValue = std::to_string(hours) + ":" + std::to_string(minutes) + ":" + std::to_string(seconds);
 }
+
+std::shared_ptr<FormatType> Time::getCopy() {
+    return make_shared<Time>(*this);
+}
+

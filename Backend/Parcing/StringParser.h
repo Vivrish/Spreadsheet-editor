@@ -1,11 +1,12 @@
 #ifndef SEMESTRALWORK_STRINGPARSER_H
 #define SEMESTRALWORK_STRINGPARSER_H
-#include "../CellData/CellDataType.h"
 #include "../Operators/Operator.h"
 #include <stack>
 #include <queue>
 #include <string>
 #include <unordered_map>
+
+class CellDataType;
 
 class StringParser {
 

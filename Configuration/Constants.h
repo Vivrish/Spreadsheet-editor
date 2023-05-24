@@ -4,5 +4,7 @@
 
 const std::string NAME_OF_CREATED_TABLE = "Table.csv";
 
+const std::string PADDING = "    ";
+
 
 #endif //SEMESTRALWORK_CONSTANTS_H

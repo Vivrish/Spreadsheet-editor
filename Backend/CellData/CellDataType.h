@@ -1,9 +1,10 @@
 #ifndef SEMESTRALWORK_CELLDATATYPE_H
 #define SEMESTRALWORK_CELLDATATYPE_H
 #include <string>
-//#include "../Parcing/StringParser.h"
-//todo
-// Solve include loop
+#include <memory>
+#include "../Parcing/StringParser.h"
+
+
 class CellDataType {
 public:
 
@@ -12,6 +13,8 @@ public:
     [[nodiscard]] std::string getRawValue() const;
 
     virtual void evaluate() = 0;
+
+    virtual std::shared_ptr<CellDataType> getCopy()  = 0;
 
     [[nodiscard]] std::string getResult() const;
 
@@ -27,7 +30,7 @@ class String: public CellDataType {
 
     void evaluate() override;
 
-
+    std::shared_ptr<CellDataType> getCopy() override;
 };
 
 
@@ -37,7 +40,7 @@ class Numeric: public CellDataType {
 
     void evaluate() override;
 
-
+    std::shared_ptr<CellDataType> getCopy() override;
 };
 
 

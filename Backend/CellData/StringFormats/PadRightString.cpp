@@ -1,6 +1,14 @@
 #include "../FormatType.h"
+#include "../../../Configuration/Constants.h"
 
+using namespace std;
+
+PadRightString::PadRightString(const std::string &pRawValue): StringFormatType(pRawValue) {}
 
 void PadRightString::format() {
-    formattedValue = rawValue + "    ";
+    formattedValue = rawValue + PADDING;
+}
+
+shared_ptr<FormatType> PadRightString::getCopy() {
+    return make_shared<PadRightString>(*this);
 }
