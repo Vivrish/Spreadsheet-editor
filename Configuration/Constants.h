@@ -6,5 +6,7 @@ const std::string NAME_OF_CREATED_TABLE = "Table.csv";
 
 const std::string PADDING = "    ";
 
+const int TABLE_SIZE = 10;
+
 
 #endif //SEMESTRALWORK_CONSTANTS_H

@@ -8,6 +8,8 @@ public:
 
     explicit FormatType(const std::string & pRawValue);
 
+    void setValue(const std::string & val);
+
     virtual void format() = 0;
 
     virtual std::shared_ptr<FormatType> getCopy() = 0;

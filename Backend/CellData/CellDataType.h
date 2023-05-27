@@ -14,9 +14,13 @@ public:
 
     virtual void evaluate() = 0;
 
-    virtual std::shared_ptr<CellDataType> getCopy()  = 0;
+    virtual std::shared_ptr<CellDataType> getCopy() = 0;
 
     [[nodiscard]] std::string getResult() const;
+
+    void setRawValue(const std::string & val);
+
+    virtual ~CellDataType() = default;
 
 protected:
     std::string rawValue;
@@ -25,6 +29,8 @@ protected:
 };
 
 class String: public CellDataType {
+
+public:
 
     explicit String(const std::string & pValue);
 
@@ -35,6 +41,8 @@ class String: public CellDataType {
 
 
 class Numeric: public CellDataType {
+
+public:
 
     explicit Numeric(const std::string & pValue);
 

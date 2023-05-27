@@ -12,3 +12,7 @@ std::string CellDataType::getRawValue() const {
 std::string CellDataType::getResult() const {
     return result;
 }
+
+void CellDataType::setRawValue(const std::string &val) {
+    rawValue = val;
+}

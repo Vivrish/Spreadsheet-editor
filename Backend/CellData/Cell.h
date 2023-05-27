@@ -4,20 +4,32 @@
 #include "StoredData.h"
 #include "FormatType.h"
 #include <memory>
+#include <string>
 
 
 class Cell {
+
+public:
+
     Cell(int row, int column, const std::shared_ptr<CellDataType>& pValue);
 
-    bool evaluateExpression();
+    Cell(int row, int column);
+
+    void evaluateExpression();
 
     void formatExpression();
 
     void setFormat(const std::shared_ptr<FormatType> & newFormat);
 
-    void setType();
+    void setType(const std::shared_ptr<CellDataType> & newType);
+
+    void setValue(const std::string & val);
+
+    void clear();
 
     [[nodiscard]] std::string getOutput() const;
+
+    [[nodiscard]] std::string getRawOutput() const;
 
 private:
     std::pair<int, int> position;

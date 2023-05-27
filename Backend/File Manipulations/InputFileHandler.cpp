@@ -12,7 +12,11 @@ bool InputFileHandler::open() {
 }
 
 bool InputFileHandler::close() {
-    if (inFile.is_open()) inFile.close();
+    if (inFile.is_open()) {
+        inFile.close();
+        return true;
+    }
+    return false;
     //todo
     // Should it throw exception when file cannot be closed?
 }

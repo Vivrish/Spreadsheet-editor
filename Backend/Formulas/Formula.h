@@ -3,31 +3,32 @@
 
 #include "../Operators/Operator.h"
 #include "../CellData/Cell.h"
+
 class Formula: public UnaryOperator {
-    String calculateStr() override = 0;
-    Numeric calculateNum() override = 0;
+public:
+    std::string calculateStr() override = 0;
+    double calculateNum() override = 0;
+protected:
+    Associativity associativity = Associativity::RIGHT;
+    int precedence = 4;
 };
 
 class Sin: public UnaryOperator {
-    String calculateStr() final;
-    Numeric calculateNum() final;
+    double calculateNum() final;
+protected:
+    std::string signature  = "sin";
 };
 
 class Cos: public UnaryOperator {
-    String calculateStr() final;
-    Numeric calculateNum() final;
+    double calculateNum() final;
+protected:
+    std::string signature  = "cos";
 };
 
 class Strip: public UnaryOperator {
-    String calculateStr() final;
-    Numeric calculateNum() final;
+    std::string calculateStr() final;
+protected:
+    std::string signature  = "strip";
 };
 
-class CellReference: public UnaryOperator {
-    String calculateStr() final;
-    Numeric calculateNum() final;
-
-private:
-    Cell* cellPointer;
-};
 #endif //SEMESTRALWORK_FORMULA_H

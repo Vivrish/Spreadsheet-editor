@@ -7,3 +7,7 @@ FormatType::FormatType(const std::string &pRawValue) {
 std::string FormatType::getFormattedValue() const {
     return rawValue;
 }
+
+void FormatType::setValue(const std::string &val) {
+    rawValue = val;
+}

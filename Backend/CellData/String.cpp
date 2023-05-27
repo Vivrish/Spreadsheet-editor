@@ -5,7 +5,8 @@ using namespace std;
 String::String(const std::string &pValue): CellDataType(pValue) {}
 
 void String::evaluate() {
-    result = stringParser.parseAsString(rawValue);
+    stringParser.parseAsString(rawValue);
+    result = stringParser.getResult();
 }
 
 shared_ptr<CellDataType> String::getCopy() {
