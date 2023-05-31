@@ -21,3 +21,9 @@ double Minus::calculateNum() {
     clear();
     return output;
 }
+
+Minus::Minus() {
+    signature  = "-";
+    associativity = Associativity::LEFT;
+    precedence = 2;
+}

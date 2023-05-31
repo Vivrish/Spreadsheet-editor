@@ -1,12 +1,44 @@
 #ifndef SEMESTRALWORK_STRINGPARSER_H
 #define SEMESTRALWORK_STRINGPARSER_H
 
-#include "../PairHash.h"
 #include <stack>
 #include <queue>
 #include <string>
 #include <unordered_set>
+#include <memory>
+#include <vector>
 
+#include "../Operators/Operator.h"
+
+
+struct PairHash {
+    std::size_t operator () (const std::pair<int, int> & pair) const;
+};
+
+template<typename Type>
+void clearStack(std::stack<Type> & input);
+
+template<typename Type>
+void clearQueue(std::queue<Type> & input);
+
+
+std::string removePlainText(const std::string & input);
+
+std::pair<int, int> parsePair(const std::string & input);
+
+std::vector<std::string> split(const std::string & input, char delimiter);
+
+std::string trimSpaces(const std::string & input);
+
+bool isNumber(const std::string & input);
+
+bool isString(const std::string & token);
+
+bool isOperand(const std::string & token);
+
+bool isOperator(const std::string & input);
+
+bool isFunction(const std::string & input);
 
 class StringParser {
 
@@ -14,27 +46,14 @@ public:
 
     StringParser() = default;
 
-    explicit StringParser(const std::string & value);
 
-    void parseAsNumeric(const std::string & input);
+    void parse(const std::string & input);
 
-    void parseAsString(const std::string & input);
-
-    std::unordered_set<std::pair<int, int>, PairHash> scoopCellReferences(const std::string & input);
-
-    std::pair<int, int> getNext();
-
-    void replaceReferenceWithValue(std::string & value);
-
-    [[nodiscard]] std::stack<CellDataType> getTokens() const;
-
-    [[nodiscard]] std::queue<CellDataType> getOutput() const;
-
-    [[nodiscard]] std::string getResult() const;
+    [[nodiscard]] std::queue<std::string> getOutput() const;
 
 private:
-    std::stack<Operator> tokens;
-    std::queue<CellDataType> output;
-    std::string value;
+
+    std::stack<std::shared_ptr<Operator>> operators;
+    std::queue<std::string> output;
 };
 #endif //SEMESTRALWORK_STRINGPARSER_H

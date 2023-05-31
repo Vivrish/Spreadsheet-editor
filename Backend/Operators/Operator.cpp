@@ -20,3 +20,15 @@ void Operator::clear() {
     numArgs.clear();
     strArgs.clear();
 }
+
+std::string Operator::getSignature() const {
+    return signature;
+}
+
+Associativity Operator::getAssociativity() const {
+    return associativity;
+}
+
+int Operator::getPrecedence() const {
+    return precedence;
+}

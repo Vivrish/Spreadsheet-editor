@@ -23,4 +23,6 @@ class InvalidOperationException: public std::exception {};
 
 class LoopException: public std::exception {};
 
+class MismatchedParenthesisException: public std::exception {};
+
 #endif //SEMESTRALWORK_EXCEPTIONS_H

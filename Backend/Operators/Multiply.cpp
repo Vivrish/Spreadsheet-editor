@@ -22,3 +22,9 @@ std::string Multiply::calculateStr() {
         return calculateStrNum();
     throw InvalidOperationException();
 }
+
+Multiply::Multiply() {
+    associativity = Associativity::LEFT;
+    precedence = 3;
+    signature  = "*";
+}

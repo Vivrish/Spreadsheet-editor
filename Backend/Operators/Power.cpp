@@ -7,3 +7,9 @@ double Power::calculateNum() {
     double output = pow(numArgs[0], numArgs[1]);
     return output;
 }
+
+Power::Power() {
+    signature  = "^";
+    associativity = Associativity::RIGHT;
+    precedence = 4;
+}

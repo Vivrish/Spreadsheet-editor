@@ -2,6 +2,10 @@
 #include "Formula.h"
 
 
+Strip::Strip(): Formula() {
+    signature = "strip";
+}
+
 std::string Strip::calculateStr() {
     UnaryOperator::checkStr();
 

@@ -12,3 +12,9 @@ std::string Plus::calculateStr() {
     std::string output = strArgs[0] + strArgs[1];
     return output;
 }
+
+Plus::Plus() {
+    signature  = "+";
+    associativity = Associativity::LEFT;
+    precedence = 2;
+}

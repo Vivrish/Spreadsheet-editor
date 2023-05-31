@@ -7,16 +7,21 @@ enum class Associativity {
     RIGHT, LEFT
 };
 
+
+
 class Operator {
 public:
-    void addArgument(double argument);
-    void addArgument(const std::string & argument);
+    virtual void addArgument(double argument);
+    virtual void addArgument(const std::string & argument);
+    virtual void clear();
+    [[nodiscard]] virtual std::string getSignature() const;
+    [[nodiscard]] virtual int getPrecedence() const;
+    [[nodiscard]] virtual Associativity getAssociativity() const;
 
     virtual std::string calculateStr();
     virtual double calculateNum();
     virtual void checkNum() = 0;
     virtual void checkStr() = 0;
-    void clear();
     virtual ~Operator() = default;
 
 protected:
@@ -27,10 +32,24 @@ protected:
     std::vector<std::string> strArgs;
 };
 
+class LeftParentheses: public Operator {
+public:
+    LeftParentheses();
+    void checkStr() override {};
+    void checkNum() override {};
+
+};
+
+class RightParentheses: public Operator {
+public:
+    RightParentheses();
+    void checkStr() override {};
+    void checkNum() override {};
+
+};
+
 class BinaryOperator: public Operator {
 public:
-    std::string calculateStr() override = 0;
-    double calculateNum() override = 0;
 
     void checkNum() override;
     void checkStr() override;
@@ -38,59 +57,44 @@ public:
 
 class Plus: public BinaryOperator {
 public:
+    Plus();
     std::string calculateStr() override;
     double calculateNum() override;
-protected:
-    std::string signature  = "+";
-    Associativity associativity = Associativity::LEFT;
-    int precedence = 2;
 };
 
 class Minus: public BinaryOperator {
 public:
+    Minus();
     std::string calculateStr() override;
     double calculateNum() override;
-protected:
-    std::string signature  = "-";
-    Associativity associativity = Associativity::LEFT;
-    int precedence = 2;
+
 };
 
 class Multiply: public BinaryOperator {
 public:
+    Multiply();
     std::string calculateStr() override;
     double calculateNum() override;
-protected:
-    Associativity associativity = Associativity::LEFT;
-    int precedence = 3;
-    std::string signature  = "*";
 private:
     std::string calculateStrNum();
 };
 
 class Divide: public BinaryOperator {
 public:
+    Divide();
     double calculateNum() override;
     std::string calculateStr() override;
-protected:
-    Associativity associativity = Associativity::LEFT;
-    int precedence = 3;
-    std::string signature  = "/";
 };
 
 class Power: public BinaryOperator {
 public:
+    Power();
     double calculateNum() override;
-protected:
-    std::string signature  = "^";
-    Associativity associativity = Associativity::RIGHT;
-    int precedence = 4;
+
 };
 
 class UnaryOperator: public Operator {
 public:
-    std::string calculateStr() override = 0;
-    double calculateNum() override = 0;
     void checkNum() override;
     void checkStr() override;
 };

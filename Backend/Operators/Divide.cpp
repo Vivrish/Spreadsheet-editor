@@ -23,3 +23,9 @@ double Divide::calculateNum() {
     double output = numArgs[0] / numArgs[1];
     return output;
 }
+
+Divide::Divide() {
+    associativity = Associativity::LEFT;
+    precedence = 3;
+    signature  = "/";
+}
