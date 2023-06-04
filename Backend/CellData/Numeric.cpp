@@ -5,8 +5,8 @@ using namespace std;
 Numeric::Numeric(const std::string &pValue): CellDataType(pValue) {}
 
 void Numeric::evaluate() {
-    stringParser.parseAsNumeric(rawValue);
-    result = stringParser.getResult();
+    stringParser.parse(rawValue);
+    result = to_string(stringParser.getAST()->getNumericResult());
 }
 
 shared_ptr<CellDataType> Numeric::getCopy() {

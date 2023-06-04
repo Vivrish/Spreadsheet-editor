@@ -6,16 +6,15 @@ std::string Divide::calculateStr() {
     if (not numArgs.empty() or strArgs.size() != 2)
         throw InvalidOperationException();
 
-    std::string output = strArgs[0];
+    std::string output = strArgs[0].substr(1, strArgs[0].length() - 2);
 
-    size_t position = output.find(strArgs[1]);
+    size_t position = output.find(strArgs[1].substr(1, strArgs[1].length() - 2));
 
-    while (position != std::string::npos) {
-        output.erase(position, strArgs[1].length());
-        position = output.find(strArgs[1]);
+    if (position != std::string::npos) {
+        output.erase(position);
     }
 
-    return output;
+    return "\"" + output + "\"";
 }
 
 double Divide::calculateNum() {

@@ -1,9 +1,7 @@
 #include "StringParser.h"
 #include <regex>
-#include "../Operators/Operator.h"
 #include "../Formulas/Formula.h"
 #include "../Exceptions/Exceptions.h"
-
 
 using namespace std;
 
@@ -23,6 +21,15 @@ void clearStack(std::stack<Type> &input) {
         input.pop();
 }
 
+template<typename Type>
+Type getSecondFromTop(std::stack<Type> &input) {
+    Type tmp = input.top();
+    input.pop();
+    Type output = input.top();
+    input.push(tmp);
+    return output;
+}
+
 unordered_map<string, shared_ptr<Operator>> signatureToPtr = {
         {"+",     make_shared<Plus>()},
         {"-",     make_shared<Minus>()},
@@ -35,6 +42,34 @@ unordered_map<string, shared_ptr<Operator>> signatureToPtr = {
         {")",     make_shared<RightParentheses>()},
         {"(",     make_shared<LeftParentheses>()}
 };
+
+
+shared_ptr<BinaryOperator> binaryOperatorGenerator(const string &input) {
+    if (input == "+")
+        return make_shared<Plus>();
+    else if (input == "-")
+        return make_shared<Minus>();
+    else if (input == "*")
+        return make_shared<Multiply>();
+    else if (input == "/")
+        return make_shared<Divide>();
+    else if (input == "^")
+        return make_shared<Power>();
+
+    throw InvalidOperationException();
+}
+
+
+shared_ptr<UnaryOperator> unaryOperatorGenerator(const string &input) {
+    if (input == "sin")
+        return make_shared<Sin>();
+    else if (input == "cos")
+        return make_shared<Cos>();
+    else if (input == "strip")
+        return make_shared<Strip>();
+
+    throw InvalidOperationException();
+}
 
 const unordered_set<string> functions = {"sin", "cos", "strip"};
 
@@ -88,37 +123,72 @@ std::string removePlainText(const std::string &input) {
 
 std::vector<std::string> split(const std::string &input, char delimiter) {
     vector<string> output;
-    istringstream stream(input);
     string element;
 
-    while (getline(stream, element, delimiter)) {
-        output.push_back(element);
+    bool inQuotes = false;
+
+    for (char symbol: input) {
+        if (symbol == '\"')
+            inQuotes = not inQuotes;
+        if (symbol == delimiter and not inQuotes) {
+            if (not element.empty())
+                output.push_back(element);
+            element.clear();
+        } else element += symbol;
     }
+
+    if (not element.empty())
+        output.push_back(element);
 
     return output;
 }
 
 std::string trimSpaces(const std::string &input) {
     bool prevSpace = false;
+    bool inQuotes = false;
     string output;
     for (char letter: input) {
-        if (isspace(letter)) {
-            if (not prevSpace)
-                output.push_back(letter);
-            prevSpace = true;
-        } else {
+        if (letter == '\"')
+            inQuotes = not inQuotes;
+        if (inQuotes) {
             output.push_back(letter);
             prevSpace = false;
+        }
+        else {
+            if (isspace(letter)) {
+                if (not prevSpace)
+                    output.push_back(letter);
+                prevSpace = true;
+            } else {
+                output.push_back(letter);
+                prevSpace = false;
+            }
         }
     }
     return output;
 }
 
 bool isNumber(const std::string &input) {
-    return all_of(input.begin(), input.end(), [](char c) { return isdigit(c); });
+    int dotCount = 0, minusCount = 0;
+    if (input == "-")
+        return false;
+    for (size_t i = 0; i < input.size(); i++) {
+        if (input[i] == '.')
+            dotCount++;
+        if (input[i] == '-')
+            minusCount++;
+        if (i == 0) {
+            if (input[i] != '-' and input[i] != '.' and not isdigit(input[i]))
+                return false;
+        } else if (not isdigit(input[i]) and input[i] != '.')
+            return false;
+    }
+    if (minusCount > 1 or dotCount > 1)
+        return false;
+    return true;
 }
 
-bool isString(const std::string & input) {
+bool isString(const std::string &input) {
     if (input.size() < 2)
         return false;
     if (input.front() != '\"' or input.back() != '\"')
@@ -127,7 +197,6 @@ bool isString(const std::string & input) {
         return false;
     return true;
 }
-
 
 
 bool isOperand(const string &token) {
@@ -142,9 +211,50 @@ bool isFunction(const string &input) {
     return functions.count(input) != 0;
 }
 
+bool insideQuotations(const string & input, int index) {
+    if (index >= (int) input.size())
+        throw IndexOutOfBoundsException();
+
+    bool inQuotes = false;
+
+    for (int i = 0; i <= index; i++) {
+        if (input[i] == '\"')
+            inQuotes = not inQuotes;
+    }
+    return inQuotes;
+}
+
+pair<int, int> strToPair(const string & input) {
+    string delim = ":";
+    size_t pos = input.find(delim);
+
+    if (pos != string::npos) {
+        string first = input.substr(0, pos);
+        string second = input.substr(pos + delim.length());
+        return {stoi(first), stoi(second)};
+    }
+
+    return {-1, -1};
+}
+
+void handleOperator(stack<shared_ptr<ASTNode>> &nodes, const string &op) {
+    if (isOperator(op)) {
+        shared_ptr<ASTNode> newNode = make_shared<BinaryOperatorNode>(binaryOperatorGenerator(op), nodes.top(),
+                                                                      getSecondFromTop(nodes));
+        nodes.pop();
+        nodes.pop();
+        nodes.push(newNode);
+    } else if (isFunction(op)) {
+        shared_ptr<ASTNode> newNode = make_shared<UnaryOperatorNode>(unaryOperatorGenerator(op), nodes.top());
+        nodes.pop();
+        nodes.push(newNode);
+    } else throw InvalidOperationException();
+}
+
 void StringParser::parse(const std::string &input) {
     clearStack(operators);
     clearQueue(output);
+    clearStack(outputNodes);
 
     string tokens = trimSpaces(input);
 
@@ -152,9 +262,10 @@ void StringParser::parse(const std::string &input) {
 
     shared_ptr<Operator> operatorToken;
     for (const string &token: splitTokens) {
-        if (isOperand(token))
+        if (isOperand(token)) {
+            outputNodes.push(make_shared<ValueNode>(token));
             output.push(token);
-        else if (isFunction(token))
+        } else if (isFunction(token))
             operators.push(signatureToPtr[token]);
         else if (isOperator(token)) {
             operatorToken = signatureToPtr[token];
@@ -162,12 +273,13 @@ void StringParser::parse(const std::string &input) {
 
                 while (
                         operators.top()->getSignature() != "(" and
-                       (operators.top()->getPrecedence() > operatorToken->getPrecedence()
-                        or (operators.top()->getPrecedence() ==
-                            operatorToken->getPrecedence() and
-                            operatorToken->getAssociativity() ==
-                            Associativity::LEFT))) {
+                        (operators.top()->getPrecedence() > operatorToken->getPrecedence()
+                         or (operators.top()->getPrecedence() ==
+                             operatorToken->getPrecedence() and
+                             operatorToken->getAssociativity() ==
+                             Associativity::LEFT))) {
                     output.push(operators.top()->getSignature());
+                    handleOperator(outputNodes, operators.top()->getSignature());
                     operators.pop();
                     if (operators.empty())
                         break;
@@ -175,14 +287,14 @@ void StringParser::parse(const std::string &input) {
             }
 
             operators.push(operatorToken);
-        }
-        else if (token == "(")
+        } else if (token == "(")
             operators.push(signatureToPtr["("]);
         else if (token == ")") {
             while (operators.top()->getSignature() != "(") {
                 if (operators.empty())
                     throw MismatchedParenthesisException();
                 output.push(operators.top()->getSignature());
+                handleOperator(outputNodes, operators.top()->getSignature());
                 operators.pop();
                 if (operators.empty())
                     break;
@@ -192,6 +304,7 @@ void StringParser::parse(const std::string &input) {
             operators.pop();
             if (not operators.empty() and isFunction(operators.top()->getSignature())) {
                 output.push(operators.top()->getSignature());
+                handleOperator(outputNodes, operators.top()->getSignature());
                 operators.pop();
             }
         }
@@ -202,6 +315,7 @@ void StringParser::parse(const std::string &input) {
         if (operators.top()->getSignature() == "(")
             throw MismatchedParenthesisException();
         output.push(operators.top()->getSignature());
+        handleOperator(outputNodes, operators.top()->getSignature());
         operators.pop();
     }
 
@@ -211,4 +325,38 @@ void StringParser::parse(const std::string &input) {
 
 std::queue<std::string> StringParser::getOutput() const {
     return output;
+}
+
+std::shared_ptr<ASTNode> StringParser::getAST() const {
+    return outputNodes.top();
+}
+
+StringParser::StringParser(const std::string & pRefEval) {
+    refEval = pRefEval;
+}
+
+void StringParser::replaceReferenceWithValue(const std::string &value) {
+    regex pattern(R"(\b(\d+:\d+)\b)");
+    smatch match;
+
+    if (regex_match(refEval, match, pattern)) {
+        string matchSubStr = match.str(1);
+        size_t position = refEval.find(matchSubStr);
+
+        if (insideQuotations(refEval, (int) position))
+            refEval.replace(position, matchSubStr.length(), value);
+
+    }
+}
+
+std::pair<int, int> StringParser::getNext() {
+    regex pattern(R"(\b(\d+:\d+)\b)");
+    smatch match;
+
+    if (regex_match(refEval, match, pattern)) {
+        string matchSubStr = match.str(1);
+        return strToPair(matchSubStr);
+    }
+
+    return {-1, -1};
 }

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "Formula.h"
+#include "regex"
 
 
 Strip::Strip(): Formula() {
@@ -9,15 +10,7 @@ Strip::Strip(): Formula() {
 std::string Strip::calculateStr() {
     UnaryOperator::checkStr();
 
-    std::string formattedValue = strArgs[0];
-
-    formattedValue.erase(formattedValue.begin(), std::find_if(formattedValue.begin(), formattedValue.end(), [](unsigned char ch) {
-        return !std::isspace(ch);
-    }));
-
-    formattedValue.erase(std::find_if(formattedValue.rbegin(), formattedValue.rend(), [](unsigned char ch) {
-        return !std::isspace(ch);
-    }).base(), formattedValue.end());
-
-    return formattedValue;
+    std::string output = strArgs[0];
+    output = std::regex_replace(output, std::regex("^ +| +$|( ) +"), "$1");
+    return output;
 }

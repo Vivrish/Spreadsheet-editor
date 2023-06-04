@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "../Operators/Operator.h"
-
+#include "AbstractSyntaxTree.h"
 
 struct PairHash {
     std::size_t operator () (const std::pair<int, int> & pair) const;
@@ -21,6 +21,8 @@ void clearStack(std::stack<Type> & input);
 template<typename Type>
 void clearQueue(std::queue<Type> & input);
 
+template<typename Type>
+Type getSecondFromTop(std::stack<Type> & input);
 
 std::string removePlainText(const std::string & input);
 
@@ -40,20 +42,34 @@ bool isOperator(const std::string & input);
 
 bool isFunction(const std::string & input);
 
+bool insideQuotations(const std::string & input, int index);
+
+std::pair<int, int> strToPair(const std::string & input);
+
+std::unordered_set<std::pair<int, int>, PairHash> scoopCellReferences(const std::string &input);
+
 class StringParser {
 
 public:
 
     StringParser() = default;
 
+    explicit StringParser(const std::string & pRefEval);
+
+    std::pair<int, int> getNext();
+
+    void replaceReferenceWithValue(const std::string & value);
 
     void parse(const std::string & input);
 
     [[nodiscard]] std::queue<std::string> getOutput() const;
 
-private:
+    [[nodiscard]] std::shared_ptr<ASTNode> getAST() const;
 
+private:
+    std::string refEval;
     std::stack<std::shared_ptr<Operator>> operators;
     std::queue<std::string> output;
+    std::stack<std::shared_ptr<ASTNode>> outputNodes;
 };
 #endif //SEMESTRALWORK_STRINGPARSER_H

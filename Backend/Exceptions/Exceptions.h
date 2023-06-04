@@ -17,6 +17,8 @@ class IncorrectCalculationException: public std::exception {};
 
 class CellOutOfBoundsException: public std::exception {};
 
+class IndexOutOfBoundsException: public std::exception {};
+
 class IncorrectAmountOfArgumentsException: public std::exception {};
 
 class InvalidOperationException: public std::exception {};
@@ -24,5 +26,7 @@ class InvalidOperationException: public std::exception {};
 class LoopException: public std::exception {};
 
 class MismatchedParenthesisException: public std::exception {};
+
+class InvalidArgumentException: public std::exception {};
 
 #endif //SEMESTRALWORK_EXCEPTIONS_H

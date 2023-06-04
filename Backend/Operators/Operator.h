@@ -2,6 +2,7 @@
 #define SEMESTRALWORK_OPERATOR_H
 #include <string>
 #include <vector>
+#include <iostream>
 
 enum class Associativity {
     RIGHT, LEFT

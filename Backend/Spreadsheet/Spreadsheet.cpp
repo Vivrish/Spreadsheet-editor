@@ -8,7 +8,7 @@ using namespace std;
 Spreadsheet::Spreadsheet() {
     for (int i = 0; i < TABLE_SIZE; i++) {
         cells.emplace_back();
-        for (int j = 0; i < TABLE_SIZE; i++) {
+        for (int j = 0; j < TABLE_SIZE; j++) {
             cells[i].emplace_back(i, j);
         }
     }
@@ -69,7 +69,7 @@ void Spreadsheet::clear() {
 
 bool Spreadsheet::cycleCheck(pair<int, int> pos, unordered_set<pair<int, int>, PairHash> & traceback) {
     checkPosition(pos);
-    for (const auto & el: stringParser.scoopCellReferences(getRawData(pos))) {
+    for (const auto & el: scoopCellReferences(getRawData(pos))) {
         // Why doesn't the unordered_set have contains() method?
         if (traceback.count(el) != 0)
             return false;
