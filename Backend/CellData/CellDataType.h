@@ -4,9 +4,17 @@
 #include <memory>
 #include "../Parcing/StringParser.h"
 
+enum class CellDataTypes {
+    NUMERIC, STRING,
+    UNKNOWN
+};
+
+
 
 class CellDataType {
 public:
+
+    CellDataType() = default;
 
     explicit CellDataType(const std::string & pValue);
 
@@ -22,6 +30,10 @@ public:
 
     virtual ~CellDataType() = default;
 
+    static std::shared_ptr<CellDataType> generateType(CellDataTypes type);
+
+    static CellDataTypes strToTypes(const std::string & input);
+
 protected:
     std::string rawValue;
     std::string result;
@@ -31,6 +43,7 @@ protected:
 class String: public CellDataType {
 
 public:
+    String() = default;
 
     explicit String(const std::string & pValue);
 
@@ -43,6 +56,8 @@ public:
 class Numeric: public CellDataType {
 
 public:
+
+    Numeric() = default;
 
     explicit Numeric(const std::string & pValue);
 

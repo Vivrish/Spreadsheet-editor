@@ -27,13 +27,15 @@ public:
 
     void evaluateCell(const std::pair<int, int> & position);
 
+    void formatCell(const std::pair<int, int> & position);
+
     bool cycleCheck(std::pair<int, int> pos, std::unordered_set<std::pair<int, int>, PairHash> & traceback);
 
     [[nodiscard]] std::vector<std::vector<std::string>> importAsVector() const;
 
-    void chooseFormat(std::pair<int, int> pos, std::shared_ptr<FormatType> & newFormat);
+    void chooseFormat(std::pair<int, int> pos, const FormatTypes &newFormat);
 
-    void forceChangeType(std::pair<int, int> pos, std::shared_ptr<CellDataType> & newType);
+    void forceChangeType(std::pair<int, int> pos, const CellDataTypes &newType);
 
     void save(CSVFileHandler & fileHandler) const;
 
@@ -42,6 +44,8 @@ public:
     [[nodiscard]] std::string getData(const std::pair<int, int> & position);
 
     [[nodiscard]] std::string getRawData(const std::pair<int, int> & position);
+
+    [[nodiscard]] std::vector<std::vector<std::string>> slice(std::pair<int, int> from, std::pair<int, int> to);
 
     friend std::ostream & operator << (std::ostream & os, const Spreadsheet & spreadsheet);
 

@@ -28,7 +28,7 @@ std::string removePlainText(const std::string & input);
 
 std::pair<int, int> parsePair(const std::string & input);
 
-std::vector<std::string> split(const std::string & input, char delimiter);
+std::vector<std::string> split(const std::string & input, char delimiter, char quotation);
 
 std::string trimSpaces(const std::string & input);
 
@@ -48,17 +48,17 @@ std::pair<int, int> strToPair(const std::string & input);
 
 std::unordered_set<std::pair<int, int>, PairHash> scoopCellReferences(const std::string &input);
 
+void replaceReferencesWithValues(std::string & target, std::queue<std::string> & values);
+
+std::queue<std::pair<int, int>> getOrderedReferences(const std::string &input);
+
+
 class StringParser {
 
 public:
 
     StringParser() = default;
 
-    explicit StringParser(const std::string & pRefEval);
-
-    std::pair<int, int> getNext();
-
-    void replaceReferenceWithValue(const std::string & value);
 
     void parse(const std::string & input);
 
@@ -67,7 +67,6 @@ public:
     [[nodiscard]] std::shared_ptr<ASTNode> getAST() const;
 
 private:
-    std::string refEval;
     std::stack<std::shared_ptr<Operator>> operators;
     std::queue<std::string> output;
     std::stack<std::shared_ptr<ASTNode>> outputNodes;

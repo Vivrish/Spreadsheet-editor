@@ -60,8 +60,8 @@ void Spreadsheet::save(CSVFileHandler & fileHandler) const {
 }
 
 void Spreadsheet::clear() {
-    for (const auto & row: cells) {
-        for (auto column: row) {
+    for (auto & row: cells) {
+        for (auto & column: row) {
             column.clear();
         }
     }
@@ -79,12 +79,17 @@ bool Spreadsheet::cycleCheck(pair<int, int> pos, unordered_set<pair<int, int>, P
     return true;
 }
 
-void Spreadsheet::chooseFormat(std::pair<int, int> pos, std::shared_ptr<FormatType> &newFormat) {
-    getCell(pos).setFormat(newFormat);
+void Spreadsheet::chooseFormat(std::pair<int, int> pos, const FormatTypes & newFormat) {
+    shared_ptr<FormatType> newPtr = FormatType::generateType(newFormat);
+    if (not getCell(pos).getCalculated().empty())
+        newPtr->setValue(getCell(pos).getCalculated());
+    getCell(pos).setFormat(newPtr);
 }
 
-void Spreadsheet::forceChangeType(std::pair<int, int> pos, std::shared_ptr<CellDataType>& newType) {
-    getCell(pos).setType(newType);
+void Spreadsheet::forceChangeType(std::pair<int, int> pos, const CellDataTypes &newType) {
+    shared_ptr<CellDataType> newPtr = CellDataType::generateType(newType);
+    newPtr->setRawValue(getCell(pos).getRawOutput());
+    getCell(pos).setType(newPtr);
 }
 
 Cell & Spreadsheet::getCell(const std::pair<int, int> & pos) {
@@ -108,6 +113,8 @@ std::ostream & operator << (std::ostream & os, const Spreadsheet & spreadsheet) 
 }
 
 void Spreadsheet::evaluateCell(const std::pair<int, int> &position) {
+    if (getCell(position).getRawOutput().empty())
+        throw EvaluationOfEmptyCellException();
     checkPosition(position);
     evaluateReferences(position);
     getCell(position).evaluateExpression();
@@ -117,14 +124,33 @@ void Spreadsheet::evaluateReferences(const std::pair<int, int> &position) {
     unordered_set<pair<int, int>, PairHash> traceback;
     if (not cycleCheck(position, traceback))
         throw LoopException();
-    StringParser sp(getCell(position).getRawOutput());
-    evaluateCell(sp.getNext());
-    string value = getCell(sp.getNext()).getOutput();
-    sp.replaceReferenceWithValue(value);
-
-    while (sp.getNext() != pair<int, int>(-1,-1)) {
-        evaluateCell(sp.getNext());
-        value = getCell(sp.getNext()).getOutput();
-        sp.replaceReferenceWithValue(value);
+    queue<string> values;
+    queue<pair<int, int>> references = getOrderedReferences(getCell(position).getRawOutput());
+    while (not references.empty()) {
+        evaluateCell(references.front());
+        values.push(getCell(references.front()).getRawOutput());
+        references.pop();
     }
+    string processValue = getCell(position).getRawOutput();
+    replaceReferencesWithValues(processValue, values);
+    getCell(position).setValue(processValue);
+}
+
+void Spreadsheet::formatCell(const std::pair<int, int> &position) {
+    getCell(position).formatExpression();
+}
+
+std::vector<std::vector<std::string>> Spreadsheet::slice(std::pair<int, int> from, std::pair<int, int> to) {
+    vector<vector<string>> output;
+    checkPosition(from);
+    checkPosition(to);
+    int outI = -1;
+    for (int i = from.second; i <= to.second; i++) {
+        output.emplace_back();
+        outI++;
+        for (int j = from.first; j <= to.first; j++) {
+            output[outI].push_back(cells[i][j].getOutput());
+        }
+    }
+    return output;
 }

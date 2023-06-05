@@ -29,4 +29,18 @@ class MismatchedParenthesisException: public std::exception {};
 
 class InvalidArgumentException: public std::exception {};
 
+class FormatDoesNotExistException: public std::exception {};
+
+class TypeDoesNotExistException: public std::exception {};
+
+class InvalidDateException: public std::exception {};
+
+class ReferenceMismatchException: public std::exception {};
+
+class BadSyntaxException: public std::exception {};
+
+class EvaluationOfEmptyCellException: public std::exception {};
+
+class InvalidCommandException: public std::exception {};
+
 #endif //SEMESTRALWORK_EXCEPTIONS_H

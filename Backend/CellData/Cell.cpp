@@ -54,3 +54,7 @@ std::string Cell::getRawOutput() const {
     return value->getRawValue();
 }
 
+std::string Cell::getCalculated() const {
+    return value->getResult();
+}
+

@@ -92,14 +92,28 @@ std::unordered_set<std::pair<int, int>, PairHash> scoopCellReferences(const std:
     return out;
 }
 
-std::pair<int, int> parsePair(const std::string &input) {
+queue<pair<int, int>> getOrderedReferences(const string &input) {
     regex pattern("(\\d+:\\d+)");
-    smatch matches;
+    queue<pair<int, int>> out;
+    string inputWithoutQuotedText = removePlainText(input);
 
-    if (regex_match(input, matches, pattern)) {
-        int first = stoi(matches[0]);
-        int second = stoi(matches[1]);
-        return {first, second};
+    sregex_iterator iterMatch(inputWithoutQuotedText.begin(), inputWithoutQuotedText.end(), pattern);
+    sregex_iterator end;
+
+    while (iterMatch != end) {
+        out.push(parsePair(iterMatch->str()));
+        iterMatch++;
+    }
+
+    return out;
+}
+
+std::pair<int, int> parsePair(const std::string &input) {
+    string delim = ":";
+    size_t pos = input.find(delim);
+
+    if (pos != string::npos) {
+        return {stoi(input.substr(0, pos)), stoi(input.substr(pos + delim.length()))};
     }
 
     return {-1, -1};
@@ -121,14 +135,14 @@ std::string removePlainText(const std::string &input) {
     return output;
 }
 
-std::vector<std::string> split(const std::string &input, char delimiter) {
+std::vector<std::string> split(const std::string &input, char delimiter, char quotation) {
     vector<string> output;
     string element;
 
     bool inQuotes = false;
 
     for (char symbol: input) {
-        if (symbol == '\"')
+        if (symbol == quotation)
             inQuotes = not inQuotes;
         if (symbol == delimiter and not inQuotes) {
             if (not element.empty())
@@ -239,12 +253,16 @@ pair<int, int> strToPair(const string & input) {
 
 void handleOperator(stack<shared_ptr<ASTNode>> &nodes, const string &op) {
     if (isOperator(op)) {
+        if (nodes.size() < 2)
+            throw BadSyntaxException();
         shared_ptr<ASTNode> newNode = make_shared<BinaryOperatorNode>(binaryOperatorGenerator(op), nodes.top(),
                                                                       getSecondFromTop(nodes));
         nodes.pop();
         nodes.pop();
         nodes.push(newNode);
     } else if (isFunction(op)) {
+        if (nodes.empty())
+            throw BadSyntaxException();
         shared_ptr<ASTNode> newNode = make_shared<UnaryOperatorNode>(unaryOperatorGenerator(op), nodes.top());
         nodes.pop();
         nodes.push(newNode);
@@ -258,7 +276,7 @@ void StringParser::parse(const std::string &input) {
 
     string tokens = trimSpaces(input);
 
-    vector<string> splitTokens = split(tokens, ' ');
+    vector<string> splitTokens = split(tokens, ' ', '\"');
 
     shared_ptr<Operator> operatorToken;
     for (const string &token: splitTokens) {
@@ -328,35 +346,25 @@ std::queue<std::string> StringParser::getOutput() const {
 }
 
 std::shared_ptr<ASTNode> StringParser::getAST() const {
+    if (outputNodes.empty())
+        return make_shared<ValueNode>("");
     return outputNodes.top();
 }
 
-StringParser::StringParser(const std::string & pRefEval) {
-    refEval = pRefEval;
-}
 
-void StringParser::replaceReferenceWithValue(const std::string &value) {
+void replaceReferencesWithValues(std::string & target, std::queue<std::string> & values) {
     regex pattern(R"(\b(\d+:\d+)\b)");
     smatch match;
 
-    if (regex_match(refEval, match, pattern)) {
-        string matchSubStr = match.str(1);
-        size_t position = refEval.find(matchSubStr);
 
-        if (insideQuotations(refEval, (int) position))
-            refEval.replace(position, matchSubStr.length(), value);
-
+    while (not values.empty()) {
+        if (regex_search(target, match, pattern)) {
+            if (not insideQuotations(target, (int) match.position())) {
+                target.replace(match.position(), match.length(), values.front());
+            }
+            values.pop();
+        }
+        else throw ReferenceMismatchException();
     }
 }
 
-std::pair<int, int> StringParser::getNext() {
-    regex pattern(R"(\b(\d+:\d+)\b)");
-    smatch match;
-
-    if (regex_match(refEval, match, pattern)) {
-        string matchSubStr = match.str(1);
-        return strToPair(matchSubStr);
-    }
-
-    return {-1, -1};
-}

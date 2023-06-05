@@ -29,6 +29,8 @@ public:
 
     [[nodiscard]] std::string getOutput() const;
 
+    [[nodiscard]] std::string getCalculated() const;
+
     [[nodiscard]] std::string getRawOutput() const;
 
 private:

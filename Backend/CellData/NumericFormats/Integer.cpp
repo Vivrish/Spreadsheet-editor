@@ -6,7 +6,7 @@ using namespace std;
 Integer::Integer(const std::string &pRawValue): NumericFormatType(pRawValue) {}
 
 void Integer::format() {
-    formattedValue = std::to_string(floor(rawNumericValue));
+    formattedValue = std::to_string((long long)floor(rawNumericValue));
 }
 
 std::shared_ptr<FormatType> Integer::getCopy() {
