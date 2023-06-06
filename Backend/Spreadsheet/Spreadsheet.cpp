@@ -18,6 +18,8 @@ Spreadsheet::Spreadsheet(const std::vector<std::vector<std::string>> &input): Sp
     for (int i = 0; i < input.size(); i++) {
         for (int j = 0; j < input[i].size(); j++) {
             addData(std::pair(i, j), input[i][j]);
+            evaluateCell({i, j});
+            formatCell({i, j});
         }
     }
 }
@@ -28,7 +30,7 @@ Spreadsheet::Spreadsheet(const std::unordered_map<std::pair<int, int>, std::stri
     }
 }
 
-Spreadsheet::Spreadsheet(CSVFileHandler & fileHandler): Spreadsheet(fileHandler.importAsVector()) {}
+Spreadsheet::Spreadsheet(InputCSVFileHandler & fileHandler): Spreadsheet(fileHandler.importAsVector()) {}
 
 void Spreadsheet::addData(const std::pair<int, int> & position, const std::string & value) {
     if (position.first > TABLE_SIZE or position.second > TABLE_SIZE)
@@ -55,8 +57,10 @@ std::vector<std::vector<std::string>> Spreadsheet::importAsVector() const {
     return output;
 }
 
-void Spreadsheet::save(CSVFileHandler & fileHandler) const {
+void Spreadsheet::save(OutputCSVFileHandler & fileHandler) const {
+    fileHandler.create();
     fileHandler.exportAsVector(importAsVector());
+    fileHandler.shut();
 }
 
 void Spreadsheet::clear() {
@@ -114,7 +118,7 @@ std::ostream & operator << (std::ostream & os, const Spreadsheet & spreadsheet) 
 
 void Spreadsheet::evaluateCell(const std::pair<int, int> &position) {
     if (getCell(position).getRawOutput().empty())
-        throw EvaluationOfEmptyCellException();
+        return;
     checkPosition(position);
     evaluateReferences(position);
     getCell(position).evaluateExpression();
@@ -133,14 +137,14 @@ void Spreadsheet::evaluateReferences(const std::pair<int, int> &position) {
     }
     string processValue = getCell(position).getRawOutput();
     replaceReferencesWithValues(processValue, values);
-    getCell(position).setValue(processValue);
+    getCell(position).setEvaluatedReferences(processValue);
 }
 
 void Spreadsheet::formatCell(const std::pair<int, int> &position) {
     getCell(position).formatExpression();
 }
 
-std::vector<std::vector<std::string>> Spreadsheet::slice(std::pair<int, int> from, std::pair<int, int> to) {
+std::vector<std::vector<std::string>> Spreadsheet::slice(std::pair<int, int> from, std::pair<int, int> to, bool pure) {
     vector<vector<string>> output;
     checkPosition(from);
     checkPosition(to);
@@ -149,7 +153,10 @@ std::vector<std::vector<std::string>> Spreadsheet::slice(std::pair<int, int> fro
         output.emplace_back();
         outI++;
         for (int j = from.first; j <= to.first; j++) {
-            output[outI].push_back(cells[i][j].getOutput());
+            if (pure)
+                output[outI].push_back(cells[i][j].getOutput());
+            else
+                output[outI].push_back(cells[i][j].getRawOutput());
         }
     }
     return output;

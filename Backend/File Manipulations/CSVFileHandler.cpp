@@ -4,13 +4,8 @@
 #include <sstream>
 using namespace std;
 
-CSVFileHandler::CSVFileHandler(const std::string & pInPath, const std::string & pOutPath): InputFileHandler(pInPath),
-                                                                                         OutputFileHandler(pOutPath) {
-    if (inPath.empty()) inputMode = false;
-    else inputMode = true;
-}
 
-vector<std::vector<string>> CSVFileHandler::importAsVector() {
+vector<std::vector<string>> InputCSVFileHandler::importAsVector() {
     vector<vector<string>> out;
     string column, row;
     stringstream ss;
@@ -19,7 +14,7 @@ vector<std::vector<string>> CSVFileHandler::importAsVector() {
     while (getline(inFile, row)) {
         ss = stringstream(row);
         out.emplace_back();
-        while (getline(ss, column, delimiter)) {
+        while (getline(ss, column, ',')) {
             out[count].push_back(column);
         }
         count++;
@@ -27,14 +22,16 @@ vector<std::vector<string>> CSVFileHandler::importAsVector() {
     return out;
 }
 
+InputCSVFileHandler::InputCSVFileHandler(const std::string &pPath): InputFileHandler(pPath) {}
 
-bool CSVFileHandler::exportAsVector(const std::vector<std::vector<std::string>> & table) {
+
+bool OutputCSVFileHandler::exportAsVector(const std::vector<std::vector<std::string>> & table) {
     if (not outFile.is_open()) return false;
     bool first;
     for (const auto & row: table) {
         first = true;
         for (const auto & column: row) {
-            if (not first) outFile << delimiter;
+            if (not first) outFile << ',';
             outFile << column;
             first = false;
         }
@@ -43,7 +40,5 @@ bool CSVFileHandler::exportAsVector(const std::vector<std::vector<std::string>> 
     return true;
 }
 
-void CSVFileHandler::setDelimiter(const char & delim) {
-    delimiter = delim;
-}
+OutputCSVFileHandler::OutputCSVFileHandler(const std::string &pPath): OutputFileHandler(pPath) {}
 

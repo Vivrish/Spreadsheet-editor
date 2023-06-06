@@ -5,7 +5,7 @@ using namespace std;
 Numeric::Numeric(const std::string &pValue): CellDataType(pValue) {}
 
 void Numeric::evaluate() {
-    stringParser.parse(rawValue);
+    stringParser.parse(evaluatedRefsValue);
     result = to_string(stringParser.getAST()->getNumericResult());
 }
 

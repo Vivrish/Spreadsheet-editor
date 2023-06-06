@@ -25,6 +25,8 @@ public:
 
     void setValue(const std::string & val);
 
+    void setEvaluatedReferences(const std::string & val);
+
     void clear();
 
     [[nodiscard]] std::string getOutput() const;

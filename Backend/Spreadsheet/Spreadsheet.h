@@ -19,7 +19,7 @@ public:
 
     explicit Spreadsheet(const std::unordered_map<std::pair<int, int>, std::string> & input);
 
-    explicit Spreadsheet(CSVFileHandler & fileHandler);
+    explicit Spreadsheet(InputCSVFileHandler & fileHandler);
 
     explicit Spreadsheet(const std::vector<std::vector<std::string>> & input);
 
@@ -37,7 +37,7 @@ public:
 
     void forceChangeType(std::pair<int, int> pos, const CellDataTypes &newType);
 
-    void save(CSVFileHandler & fileHandler) const;
+    void save(OutputCSVFileHandler & fileHandler) const;
 
     void clear();
 
@@ -45,7 +45,7 @@ public:
 
     [[nodiscard]] std::string getRawData(const std::pair<int, int> & position);
 
-    [[nodiscard]] std::vector<std::vector<std::string>> slice(std::pair<int, int> from, std::pair<int, int> to);
+    [[nodiscard]] std::vector<std::vector<std::string>> slice(std::pair<int, int> from, std::pair<int, int> to, bool pure);
 
     friend std::ostream & operator << (std::ostream & os, const Spreadsheet & spreadsheet);
 

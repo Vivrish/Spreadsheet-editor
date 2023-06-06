@@ -32,3 +32,7 @@ CellDataTypes CellDataType::strToTypes(const std::string &input) {
         return CellDataTypes::STRING;
     throw TypeDoesNotExistException();
 }
+
+void CellDataType::setEvaluatedReferences(const std::string &val) {
+    evaluatedRefsValue = val;
+}

@@ -18,15 +18,17 @@ public:
 
     explicit CellDataType(const std::string & pValue);
 
-    [[nodiscard]] std::string getRawValue() const;
+    [[nodiscard]] virtual std::string getRawValue() const;
 
     virtual void evaluate() = 0;
 
     virtual std::shared_ptr<CellDataType> getCopy() = 0;
 
-    [[nodiscard]] std::string getResult() const;
+    [[nodiscard]] virtual std::string getResult() const;
 
-    void setRawValue(const std::string & val);
+    virtual void setRawValue(const std::string & val);
+
+    virtual void setEvaluatedReferences(const std::string & val);
 
     virtual ~CellDataType() = default;
 
@@ -36,6 +38,7 @@ public:
 
 protected:
     std::string rawValue;
+    std::string evaluatedRefsValue;
     std::string result;
     StringParser stringParser = StringParser();
 };

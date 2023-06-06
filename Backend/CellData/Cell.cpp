@@ -38,6 +38,8 @@ void Cell::setType(const std::shared_ptr<CellDataType> &newType) {
     value = newType;
 }
 
+
+
 void Cell::setValue(const std::string &val) {
     value->setRawValue(val);
     formatType->setValue(val);
@@ -56,5 +58,9 @@ std::string Cell::getRawOutput() const {
 
 std::string Cell::getCalculated() const {
     return value->getResult();
+}
+
+void Cell::setEvaluatedReferences(const std::string &val) {
+    value->setEvaluatedReferences(val);
 }
 

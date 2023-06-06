@@ -5,7 +5,7 @@ using namespace std;
 String::String(const std::string &pValue): CellDataType(pValue) {}
 
 void String::evaluate() {
-    stringParser.parse(rawValue);
+    stringParser.parse(evaluatedRefsValue);
     result = stringParser.getAST()->getStringResult();
 }
 

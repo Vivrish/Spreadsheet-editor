@@ -78,6 +78,7 @@ public:
 private:
     std::pair<int, int> from;
     std::pair<int, int> to;
+    bool pure = true;
 };
 
 class Save: public Command {
@@ -87,6 +88,9 @@ public:
     void execute() override;
 
     void extractArguments() override;
+
+private:
+    OutputCSVFileHandler csvFileHandler;
 };
 
 class Import: public Command {
@@ -96,6 +100,8 @@ public:
     void execute() override;
 
     void extractArguments() override;
+private:
+    InputCSVFileHandler inputCsvFileHandler;
 };
 
 class Clear: public Command {

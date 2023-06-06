@@ -29,32 +29,36 @@ int main() {
     spreadsheet.addData({1,2}, "777 + 1:1");
     spreadsheet.forceChangeType({1,2}, CellDataTypes::NUMERIC);
     spreadsheet.evaluateCell({1, 2});
-    spreadsheet.chooseFormat({1,2}, FormatTypes::FLOAT);
+    spreadsheet.chooseFormat({1,2}, FormatTypes::INTEGER);
     spreadsheet.formatCell({1,2});
 
 
-    ChangeFormat changeFormat("change format 'float' of 2:3", spreadsheet);
+    ChangeFormat changeFormat("change format 'pad left string' of 2:3", spreadsheet);
     changeFormat.extractArguments();
     changeFormat.execute();
 
-    ChangeType changeType("change type 'numeric' of 2:3", spreadsheet);
+    ChangeType changeType("change type 'string' of 2:3", spreadsheet);
     changeType.extractArguments();
     changeType.execute();
 
-    Insert insert("insert \'13 + 16\' into 2:3", spreadsheet);
+    Insert insert("insert \'\"Groomy\"\' into 2:3", spreadsheet);
     insert.extractArguments();
     insert.execute();
 
-    auto sl = spreadsheet.slice({1,1}, {3, 3});
+    auto sl = spreadsheet.slice({1,1}, {3, 3}, true);
 
-    Print print("print range 1:1 3:3", spreadsheet);
+    Print print("print range 1:1 3:3 raw", spreadsheet);
     print.extractArguments();
     print.execute();
 
 
-    Clear clear("clear", spreadsheet);
-    clear.extractArguments();
-    clear.execute();
+    Save save("save 'goofy.txt'", spreadsheet);
+    save.extractArguments();
+    save.execute();
+
+    Import imp("import 'C:\\Users\\Admin\\CLionProjects\\SemestralWork\\cmake-build-debug\\goofy.txt'", spreadsheet);
+    imp.extractArguments();
+    imp.execute();
 
    cout << spreadsheet;
 

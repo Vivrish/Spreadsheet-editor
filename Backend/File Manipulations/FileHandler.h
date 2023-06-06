@@ -8,6 +8,8 @@
 
 class InputFileHandler {
 public:
+    InputFileHandler() = default;
+
     explicit InputFileHandler(const std::string & pPath);
 
     bool close();
@@ -21,6 +23,7 @@ protected:
 
 class OutputFileHandler {
 public:
+    OutputFileHandler() = default;
     explicit OutputFileHandler(const std::string & pPath);
 
     bool create();
@@ -32,18 +35,6 @@ protected:
     std::fstream outFile;
 };
 
-class CSVFileHandler: public InputFileHandler, public OutputFileHandler {
-public:
-    CSVFileHandler(const std::string & pInPath, const std::string & pOutPath);
-    std::vector<std::vector<std::string>> importAsVector();
-    bool exportAsVector(const std::vector<std::vector<std::string>>& table);
-    void setDelimiter(const char & delim);
-    void switchToOutMode(const std::string & pOutPath);
-
-private:
-    char delimiter = ',';
-    bool inputMode;
-};
 class ConfigFileHandler: public InputFileHandler {
 public:
 
@@ -51,6 +42,20 @@ public:
 
     std::unordered_map<std::string, std::string> importAsMap();
 
+};
+
+class InputCSVFileHandler: public InputFileHandler {
+public:
+    InputCSVFileHandler() = default;
+    explicit InputCSVFileHandler(const std::string & pPath);
+    std::vector<std::vector<std::string>> importAsVector();
+};
+
+class OutputCSVFileHandler: public OutputFileHandler {
+public:
+    OutputCSVFileHandler() = default;
+    explicit OutputCSVFileHandler(const std::string & pPath);
+    bool exportAsVector(const std::vector<std::vector<std::string>>& table);
 };
 
 
