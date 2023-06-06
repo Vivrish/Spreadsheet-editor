@@ -6,7 +6,7 @@ using namespace std;
 PadLeftString::PadLeftString(const std::string &pRawValue): StringFormatType(pRawValue) {}
 
 void PadLeftString::format() {
-    formattedValue = PADDING + rawValue;
+    formattedValue = constants["PADDING"] + rawValue;
 }
 
 shared_ptr<FormatType> PadLeftString::getCopy() {

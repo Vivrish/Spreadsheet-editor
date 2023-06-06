@@ -1,2 +1,4 @@
-grass:green
-sky:blue
+NAME_OF_CREATED_TABLE:'Table.csv'
+PADDING:'    '
+TABLE_SIZE:'10'
+CELL_SIZE:'10'

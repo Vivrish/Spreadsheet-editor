@@ -1,6 +1,6 @@
 #include "FormatType.h"
+#include "../File Manipulations/FileHandler.h"
 #include "../Exceptions/Exceptions.h"
-
 using namespace std;
 
 FormatType::FormatType(const std::string &pRawValue) {
@@ -57,4 +57,13 @@ FormatTypes FormatType::strToTypes(const std::string &input) {
     else if (input == "stripped string")
         return FormatTypes::STRIPPED_STRING;
     throw FormatDoesNotExistException();
+}
+
+FormatType::FormatType() {
+    ConfigFileHandler configFileHandler("../Configuration/Config.txt");
+    configFileHandler.open();
+    configFileHandler.generateMap();
+    configFileHandler.checkMap();
+    constants = configFileHandler.getConf();
+    configFileHandler.close();
 }

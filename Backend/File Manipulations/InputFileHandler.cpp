@@ -5,19 +5,17 @@ InputFileHandler::InputFileHandler(const std::string &pPath) {
     inPath = pPath;
 }
 
-bool InputFileHandler::open() {
-    if (inFile.is_open()) throw FileAlreadyOpenedException();
+void InputFileHandler::open() {
+    if (inFile.is_open())
+        throw FileAlreadyOpenedException();
     inFile.open(inPath);
-    return inFile.is_open();
+    if (not inFile.is_open())
+        throw FileIsNotOpenedException();
 }
 
-bool InputFileHandler::close() {
+void InputFileHandler::close() {
     if (inFile.is_open()) {
         inFile.close();
-        return true;
     }
-    return false;
-    //todo
-    // Should it throw exception when file cannot be closed?
 }
 

@@ -2,6 +2,7 @@
 #define SEMESTRALWORK_FORMATTYPE_H
 #include <string>
 #include <memory>
+#include <unordered_map>
 
 enum class FormatTypes {
     TIME, DATE, BOOLEAN, FLOAT, INTEGER,
@@ -12,7 +13,7 @@ enum class FormatTypes {
 class FormatType {
 public:
 
-    FormatType() = default;
+    FormatType();
 
     explicit FormatType(const std::string & pRawValue);
 
@@ -31,6 +32,7 @@ public:
 protected:
     std::string rawValue;
     std::string formattedValue;
+    std::unordered_map<std::string, std::string> constants;
 };
 
 

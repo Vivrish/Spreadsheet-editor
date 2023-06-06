@@ -2,13 +2,21 @@
 #include "../../Configuration/Constants.h"
 #include "../Exceptions/Exceptions.h"
 
+
 using namespace std;
 
 
 Spreadsheet::Spreadsheet() {
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    ConfigFileHandler configFileHandler("../Configuration/Config.txt");
+    configFileHandler.open();
+    configFileHandler.generateMap();
+    configFileHandler.checkMap();
+    constants = configFileHandler.getConf();
+    configFileHandler.close();
+
+    for (int i = 0; i < stoi(constants["TABLE_SIZE"]); i++) {
         cells.emplace_back();
-        for (int j = 0; j < TABLE_SIZE; j++) {
+        for (int j = 0; j < stoi(constants["TABLE_SIZE"]); j++) {
             cells[i].emplace_back(i, j);
         }
     }
@@ -33,7 +41,7 @@ Spreadsheet::Spreadsheet(const std::unordered_map<std::pair<int, int>, std::stri
 Spreadsheet::Spreadsheet(InputCSVFileHandler & fileHandler): Spreadsheet(fileHandler.importAsVector()) {}
 
 void Spreadsheet::addData(const std::pair<int, int> & position, const std::string & value) {
-    if (position.first > TABLE_SIZE or position.second > TABLE_SIZE)
+    if (position.first > stoi(constants["TABLE_SIZE"]) or position.second > stoi(constants["TABLE_SIZE"]))
         throw CellOutOfBoundsException();
     getCell(position).setValue(value);
 }
@@ -46,18 +54,18 @@ std::string Spreadsheet::getRawData(const std::pair<int, int> &position) {
     return getCell(position).getRawOutput();
 }
 
-std::vector<std::vector<std::string>> Spreadsheet::importAsVector() const {
+std::vector<std::vector<std::string>> Spreadsheet::importAsVector() {
     vector<vector<string>> output;
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    for (int i = 0; i < stoi(constants["TABLE_SIZE"]); i++) {
         output.emplace_back();
-        for (int j = 0; j < TABLE_SIZE; j++) {
+        for (int j = 0; j < stoi(constants["TABLE_SIZE"]); j++) {
             output[i].push_back(cells[i][j].getOutput());
         }
     }
     return output;
 }
 
-void Spreadsheet::save(OutputCSVFileHandler & fileHandler) const {
+void Spreadsheet::save(OutputCSVFileHandler & fileHandler) {
     fileHandler.create();
     fileHandler.exportAsVector(importAsVector());
     fileHandler.shut();
@@ -102,7 +110,7 @@ Cell & Spreadsheet::getCell(const std::pair<int, int> & pos) {
 }
 
 void Spreadsheet::checkPosition(const std::pair<int, int> &pos) {
-    if (pos.first > TABLE_SIZE or pos.second > TABLE_SIZE)
+    if (pos.first > stoi(constants["TABLE_SIZE"]) or pos.second > stoi(constants["TABLE_SIZE"]))
         throw CellOutOfBoundsException();
 }
 

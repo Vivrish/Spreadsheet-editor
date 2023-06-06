@@ -12,6 +12,7 @@
 #include "../CellData/Cell.h"
 
 
+
 class Spreadsheet {
 public:
 
@@ -31,13 +32,13 @@ public:
 
     bool cycleCheck(std::pair<int, int> pos, std::unordered_set<std::pair<int, int>, PairHash> & traceback);
 
-    [[nodiscard]] std::vector<std::vector<std::string>> importAsVector() const;
+    [[nodiscard]] std::vector<std::vector<std::string>> importAsVector();
 
     void chooseFormat(std::pair<int, int> pos, const FormatTypes &newFormat);
 
     void forceChangeType(std::pair<int, int> pos, const CellDataTypes &newType);
 
-    void save(OutputCSVFileHandler & fileHandler) const;
+    void save(OutputCSVFileHandler & fileHandler);
 
     void clear();
 
@@ -53,11 +54,12 @@ private:
 
     Cell & getCell(const std::pair<int, int> & pos);
 
-    static void checkPosition(const std::pair<int, int> & pos);
+    void checkPosition(const std::pair<int, int> & pos);
 
     void evaluateReferences(const std::pair<int, int> & position);
 
     std::vector<std::vector<Cell>> cells;
     StringParser stringParser;
+    std::unordered_map<std::string, std::string> constants;
 };
 #endif //SEMESTRALWORK_SPREADSHEET_H

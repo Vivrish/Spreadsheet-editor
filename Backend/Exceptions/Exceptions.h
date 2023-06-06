@@ -43,4 +43,6 @@ class EvaluationOfEmptyCellException: public std::exception {};
 
 class InvalidCommandException: public std::exception {};
 
+class BadConfigException: public std::exception {};
+
 #endif //SEMESTRALWORK_EXCEPTIONS_H

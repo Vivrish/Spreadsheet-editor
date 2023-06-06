@@ -12,9 +12,9 @@ public:
 
     explicit InputFileHandler(const std::string & pPath);
 
-    bool close();
+    void close();
 
-    bool open();
+    void open();
 protected:
     std::string inPath;
     std::fstream inFile;
@@ -40,8 +40,13 @@ public:
 
     explicit ConfigFileHandler(const std::string & pInPath);
 
-    std::unordered_map<std::string, std::string> importAsMap();
+    void generateMap();
 
+    void checkMap();
+
+    std::unordered_map<std::string, std::string> getConf() const;
+private:
+    std::unordered_map<std::string, std::string> conf;
 };
 
 class InputCSVFileHandler: public InputFileHandler {

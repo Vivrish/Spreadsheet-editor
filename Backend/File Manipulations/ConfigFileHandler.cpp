@@ -2,20 +2,42 @@
 #include <sstream>
 #include "FileHandler.h"
 #include "../Exceptions/Exceptions.h"
+#include "../../Configuration/Constants.h"
 
 
 using namespace std;
 
-ConfigFileHandler::ConfigFileHandler(const std::string &pInPath): InputFileHandler(pInPath) {}
+ConfigFileHandler::ConfigFileHandler(const std::string &pInPath) : InputFileHandler(pInPath) {}
 
-std::unordered_map<std::string, std::string> ConfigFileHandler::importAsMap() {
-    unordered_map<string, string> out;
+void ConfigFileHandler::generateMap() {
     string line, key, value;
     while (getline(inFile, line)) {
         stringstream ss(line);
         if (not getline(ss, key, ':') or not getline(ss, value, ':'))
             throw BadConfigFormatException();
-        out[key] = value;
+        if (value.back() != '\'' or value.front() != '\'')
+            throw BadConfigException();
+        conf[key] = value.substr(1, value.length() - 2);
     }
-    return out;
 }
+
+
+void ConfigFileHandler::checkMap() {
+    if (conf.count("NAME_OF_CREATED_TABLE") == 0 or
+        conf.count("PADDING") == 0 or
+        conf.count("TABLE_SIZE") == 0 or
+        conf.count("CELL_SIZE") == 0)
+        throw BadConfigException();
+    try {
+        if (stoi(conf["TABLE_SIZE"]) > 10000 or stoi(conf["CELL_SIZE"]) > 100)
+            throw BadConfigException();
+    }
+    catch (std::invalid_argument &) {
+        throw BadConfigException();
+    }
+}
+
+std::unordered_map<std::string, std::string> ConfigFileHandler::getConf() const {
+    return conf;
+}
+
