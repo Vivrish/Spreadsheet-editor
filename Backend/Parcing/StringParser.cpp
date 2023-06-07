@@ -30,7 +30,20 @@ Type getSecondFromTop(std::stack<Type> &input) {
     return output;
 }
 
-unordered_map<string, shared_ptr<Operator>> signatureToPtr = {
+std::string queueToString(std::queue<std::string> & input) {
+    std::ostringstream oss;
+    while (!input.empty()) {
+        oss << input.front();
+        input.pop();
+        if (!input.empty()) {
+            oss << ' ';
+        }
+    }
+    return oss.str();
+}
+
+
+    unordered_map<string, shared_ptr<Operator>> signatureToPtr = {
         {"+",     make_shared<Plus>()},
         {"-",     make_shared<Minus>()},
         {"*",     make_shared<Multiply>()},

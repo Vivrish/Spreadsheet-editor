@@ -24,6 +24,8 @@ void clearQueue(std::queue<Type> & input);
 template<typename Type>
 Type getSecondFromTop(std::stack<Type> & input);
 
+std::string queueToString(std::queue<std::string> & input);
+
 std::string removePlainText(const std::string & input);
 
 std::pair<int, int> parsePair(const std::string & input);
@@ -58,7 +60,6 @@ class StringParser {
 public:
 
     StringParser() = default;
-
 
     void parse(const std::string & input);
 

@@ -13,6 +13,8 @@ enum class FormatTypes {
 class FormatType {
 public:
 
+    std::unordered_map<std::string, std::string> constants;
+
     FormatType();
 
     explicit FormatType(const std::string & pRawValue);
@@ -32,7 +34,6 @@ public:
 protected:
     std::string rawValue;
     std::string formattedValue;
-    std::unordered_map<std::string, std::string> constants;
 };
 
 

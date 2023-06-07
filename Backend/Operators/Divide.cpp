@@ -7,11 +7,13 @@ std::string Divide::calculateStr() {
         throw InvalidOperationException();
 
     std::string output = strArgs[0].substr(1, strArgs[0].length() - 2);
+    std::string trimmedArg = strArgs[1].substr(1, strArgs[1].length() - 2);
 
-    size_t position = output.find(strArgs[1].substr(1, strArgs[1].length() - 2));
+    size_t position = output.find(trimmedArg);
 
-    if (position != std::string::npos) {
-        output.erase(position);
+    while (position != std::string::npos) {
+        output.erase(position, trimmedArg.length());
+        position = output.find(trimmedArg);
     }
 
     return "\"" + output + "\"";

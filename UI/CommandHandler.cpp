@@ -4,7 +4,7 @@ using namespace std;
 
 CommandHandler::CommandHandler(Spreadsheet &pSpreadsheet): spreadsheet(pSpreadsheet) {}
 
-void CommandHandler::begin() {
+void CommandHandler::listen() {
     shared_ptr<Command> command;
     while (true) {
         cout << "Please, enter a command: " << endl;
@@ -21,12 +21,23 @@ void CommandHandler::begin() {
                     << endl;
             continue;
         }
-        command->extractArguments();
+        try {
+            command->extractArguments();
+        }
+        catch (out_of_range &) {
+            cout << "Provide numbers that int can hold. Try again" << endl;
+            continue;
+        }
         try {
             command->execute();
         }
         catch (InvalidOperationException &) {
             cout << "Seems like you have not entered the data to one of the cells according to the rules. Change it and try again." << endl;
+            continue;
+        }
+        catch (CellOutOfBoundsException &) {
+            cout << "That's too big of a number for a cell. Try again" << endl;
+            continue;
         }
         cout << "Command has been executed successfully. Nice job" << endl;
 

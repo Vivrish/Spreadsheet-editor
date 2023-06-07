@@ -7,7 +7,7 @@ class CommandHandler {
 public:
     explicit CommandHandler(Spreadsheet & pSpreadsheet);
 
-    void begin();
+    void listen();
 
 private:
 
