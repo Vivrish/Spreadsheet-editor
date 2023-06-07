@@ -20,8 +20,8 @@ void Print::execute() {
     auto cells = spreadsheet.slice(from, to, pure);
     for (const auto & row: cells) {
         for (const auto & column: row) {
-            output += column + "\t";
+            cout << column << "\t";
         }
-        output += "\n";
+        cout << endl;
     }
 }

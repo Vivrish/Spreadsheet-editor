@@ -1,5 +1,4 @@
 #include "Spreadsheet.h"
-#include "../../Configuration/Constants.h"
 #include "../Exceptions/Exceptions.h"
 
 
@@ -162,9 +161,9 @@ std::vector<std::vector<std::string>> Spreadsheet::slice(std::pair<int, int> fro
         outI++;
         for (int j = from.first; j <= to.first; j++) {
             if (pure)
-                output[outI].push_back(cells[i][j].getOutput());
+                output[outI].push_back(cells[i][j].getOutput().substr(0, stoi(constants["CELL_SIZE"])));
             else
-                output[outI].push_back(cells[i][j].getRawOutput());
+                output[outI].push_back(cells[i][j].getRawOutput().substr(0, stoi(constants["CELL_SIZE"])));
         }
     }
     return output;

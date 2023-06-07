@@ -3,7 +3,7 @@
 using namespace std;
 
 Import::Import(const std::string &pCommand, Spreadsheet &spreadsheet): Command(pCommand, spreadsheet) {
-    pattern = regex(R"(import '[^\s\/]+(\/[^\s\/]+)*')");
+    pattern = regex(R"(^import '[^\s\/]+(\/[^\s\/]+)*'$)");
 }
 
 void Import::extractArguments() {

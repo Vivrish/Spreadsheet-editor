@@ -113,5 +113,14 @@ public:
     void extractArguments() override;
 };
 
+class Help: public Command {
+public:
+    Help(const std::string & pCommand, Spreadsheet & spreadsheet);
+
+    void execute() override;
+
+    void extractArguments() override;
+};
+
 
 #endif //SEMESTRALWORK_COMMAND_H
