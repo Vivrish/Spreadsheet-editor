@@ -42,7 +42,7 @@ void Cell::setType(const std::shared_ptr<CellDataType> &newType) {
 
 void Cell::setValue(const std::string &val) {
     value->setRawValue(val);
-    formatType->setValue(val);
+//    formatType->setValue(val);
 }
 
 void Cell::clear() {

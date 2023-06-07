@@ -15,6 +15,6 @@ void Insert::extractArguments() {
 
 void Insert::execute() {
     spreadsheet.addData(insertPosition, insertValue);
-    spreadsheet.evaluateCell(insertPosition);
-    spreadsheet.formatCell(insertPosition);
+//    spreadsheet.evaluateCell(insertPosition);
+//    spreadsheet.formatCell(insertPosition);
 }

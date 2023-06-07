@@ -46,11 +46,19 @@ void Spreadsheet::addData(const std::pair<int, int> & position, const std::strin
 }
 
 std::string Spreadsheet::getData(const std::pair<int, int> &position) {
-    return getCell(position).getOutput();
+    string output = getCell(position).getOutput().substr(0, stoi(constants["CELL_SIZE"]));
+    int missingSpaces = stoi(constants["CELL_SIZE"]) - (int)output.length();
+    if (missingSpaces > 0)
+        output.append(missingSpaces, ' ');
+    return output;
 }
 
 std::string Spreadsheet::getRawData(const std::pair<int, int> &position) {
-    return getCell(position).getRawOutput();
+    string output = getCell(position).getRawOutput().substr(0, stoi(constants["CELL_SIZE"]));
+    int missingSpaces = stoi(constants["CELL_SIZE"]) - (int)output.length();
+    if (missingSpaces > 0)
+        output.append(missingSpaces, ' ');
+    return output;
 }
 
 std::vector<std::vector<std::string>> Spreadsheet::importAsVector() {
@@ -160,10 +168,12 @@ std::vector<std::vector<std::string>> Spreadsheet::slice(std::pair<int, int> fro
         output.emplace_back();
         outI++;
         for (int j = from.first; j <= to.first; j++) {
+            evaluateCell({i, j});
+            formatCell({i, j});
             if (pure)
-                output[outI].push_back(cells[i][j].getOutput().substr(0, stoi(constants["CELL_SIZE"])));
+                output[outI].push_back(getData({i, j}));
             else
-                output[outI].push_back(cells[i][j].getRawOutput().substr(0, stoi(constants["CELL_SIZE"])));
+                output[outI].push_back(getRawData({i, j}));
         }
     }
     return output;

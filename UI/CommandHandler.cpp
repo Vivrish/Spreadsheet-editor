@@ -8,7 +8,7 @@ void CommandHandler::begin() {
     shared_ptr<Command> command;
     while (true) {
         cout << "Please, enter a command: " << endl;
-        cin >> userInput;
+        getline(cin, userInput);
         if (cin.eof() or regex_match(userInput, regex("^exit$"))) {
             break;
         }
@@ -22,7 +22,12 @@ void CommandHandler::begin() {
             continue;
         }
         command->extractArguments();
-        command->execute();
+        try {
+            command->execute();
+        }
+        catch (InvalidOperationException &) {
+            cout << "Seems like you have not entered the data to one of the cells according to the rules. Change it and try again." << endl;
+        }
         cout << "Command has been executed successfully. Nice job" << endl;
 
     }
