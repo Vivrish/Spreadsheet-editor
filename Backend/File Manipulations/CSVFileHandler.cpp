@@ -23,8 +23,9 @@ vector<std::vector<string>> InputCSVFileHandler::importAsVector() {
 InputCSVFileHandler::InputCSVFileHandler(const std::string &pPath): InputFileHandler(pPath) {}
 
 
-bool OutputCSVFileHandler::exportAsVector(const std::vector<std::vector<std::string>> & table) {
-    if (not outFile.is_open()) return false;
+void OutputCSVFileHandler::exportAsVector(const std::vector<std::vector<std::string>> & table) {
+    if (not outFile.is_open())
+        throw FileIsNotOpenedException();
     bool first;
     for (const auto & row: table) {
         first = true;
@@ -35,7 +36,6 @@ bool OutputCSVFileHandler::exportAsVector(const std::vector<std::vector<std::str
         }
         outFile << endl;
     }
-    return true;
 }
 
 OutputCSVFileHandler::OutputCSVFileHandler(const std::string &pPath): OutputFileHandler(pPath) {}

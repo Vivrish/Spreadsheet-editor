@@ -6,7 +6,15 @@
 #include <vector>
 #include <unordered_map>
 
-class InputFileHandler {
+#include "../Exceptions/Exceptions.h"
+
+class FileHandler {
+public:
+    std::unordered_map<std::string, std::string> constants;
+
+    FileHandler();
+};
+class InputFileHandler: public FileHandler{
 public:
     InputFileHandler() = default;
 
@@ -21,14 +29,14 @@ protected:
 
 };
 
-class OutputFileHandler {
+class OutputFileHandler: public FileHandler{
 public:
     OutputFileHandler() = default;
     explicit OutputFileHandler(const std::string & pPath);
 
-    bool create();
+    void create();
 
-    bool shut();
+    void shut();
 
 protected:
     std::string outPath;
@@ -60,7 +68,7 @@ class OutputCSVFileHandler: public OutputFileHandler {
 public:
     OutputCSVFileHandler() = default;
     explicit OutputCSVFileHandler(const std::string & pPath);
-    bool exportAsVector(const std::vector<std::vector<std::string>>& table);
+    void exportAsVector(const std::vector<std::vector<std::string>>& table);
 };
 
 

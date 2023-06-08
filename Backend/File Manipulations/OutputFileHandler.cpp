@@ -3,19 +3,20 @@
 
 using namespace std;
 
-OutputFileHandler::OutputFileHandler(const std::string & pPath) {
+OutputFileHandler::OutputFileHandler(const std::string & pPath): FileHandler() {
     outPath = pPath;
 }
 
 
-bool OutputFileHandler::create() {
+void OutputFileHandler::create() {
     outFile.open(outPath, ofstream::out);
-    return outFile.is_open();
+    if (outFile.is_open())
+        throw CannotCreateTheFileException();
 }
 
-bool OutputFileHandler::shut() {
-    if (not outFile.is_open()) return false;
+void OutputFileHandler::shut() {
+    if (not outFile.is_open())
+        return;
     outFile.close();
-    return true;
 }
 

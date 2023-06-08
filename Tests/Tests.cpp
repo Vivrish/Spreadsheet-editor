@@ -202,6 +202,10 @@ void polymorphicTest() {
     assert(cellDataType->getResult() == "\"String one String two\"");
 }
 
+void testFiles() {
+
+}
+
 void cellTest() {
     Cell cell(0, 0, make_shared<Numeric>("2 ^ 2 ^ 2 ^ sin ( 2 )"));
     assert(cell.getRawOutput() == "2 ^ 2 ^ 2 ^ sin ( 2 )");

@@ -49,7 +49,7 @@ protected:
     double rawNumericValue = 0;
 };
 
-class Time: public  NumericFormatType {
+class Time: public NumericFormatType {
 public:
     Time() = default;
     explicit Time(const std::string & pRawValue);

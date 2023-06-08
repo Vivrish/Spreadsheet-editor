@@ -14,6 +14,8 @@ void testCellData();
 
 void testFormulas();
 
+void testFiles();
+
 void testAll();
 
 
