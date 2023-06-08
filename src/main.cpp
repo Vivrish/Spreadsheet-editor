@@ -26,7 +26,7 @@ int execute() {
     }
     catch (...) {
         cout << "Unexpected behaviour. Exiting the program" << endl;
-        return 0;
+        return 1;
     }
 
 
