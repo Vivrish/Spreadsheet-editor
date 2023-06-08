@@ -222,6 +222,19 @@ void cellTest() {
     assert(cell.getOutput() == "\"Val\"");
 }
 
+void testFiles() {
+    OutputCSVFileHandler outputCsvFileHandler("Table.csv");
+    outputCsvFileHandler.create();
+    outputCsvFileHandler.exportAsVector({{"\"one\"", "\"two\""}, {"\"three\"", "\"four\""}});
+    outputCsvFileHandler.shut();
+
+    InputCSVFileHandler inputCsvFileHandler("Table.csv");
+    inputCsvFileHandler.open();
+    vector<vector<string>> test = {{"\"one\"", "\"two\""}, {"\"three\"", "\"four\""}};
+    assert(inputCsvFileHandler.importAsVector() == test);
+    inputCsvFileHandler.close();
+}
+
 void testCellData() {
     polymorphicTest();
     cellTest();
@@ -232,4 +245,5 @@ void testAll() {
     testFormulas();
     testOperators();
     testParsing();
+    testFiles();
 }

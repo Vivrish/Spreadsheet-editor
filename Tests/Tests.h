@@ -18,6 +18,8 @@ void testFiles();
 
 void testAll();
 
+void testFiles();
+
 
 
 #endif //SEMESTRALWORK_TESTS_H

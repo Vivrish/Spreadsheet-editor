@@ -1,5 +1,4 @@
 #include "Spreadsheet.h"
-#include "../Exceptions/Exceptions.h"
 
 
 using namespace std;
@@ -25,8 +24,6 @@ Spreadsheet::Spreadsheet(const std::vector<std::vector<std::string>> &input): Sp
     for (int i = 0; i < input.size(); i++) {
         for (int j = 0; j < input[i].size(); j++) {
             addData(std::pair(i, j), input[i][j]);
-            evaluateCell({i, j});
-            formatCell({i, j});
         }
     }
 }
@@ -117,7 +114,7 @@ Cell & Spreadsheet::getCell(const std::pair<int, int> & pos) {
 }
 
 void Spreadsheet::checkPosition(const std::pair<int, int> &pos) {
-    if (pos.first > stoi(constants["TABLE_SIZE"]) or pos.second > stoi(constants["TABLE_SIZE"]))
+    if (pos.first >= stoi(constants["TABLE_SIZE"]) or pos.second >= stoi(constants["TABLE_SIZE"]))
         throw CellOutOfBoundsException();
 }
 

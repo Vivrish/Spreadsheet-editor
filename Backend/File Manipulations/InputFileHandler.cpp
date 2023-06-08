@@ -1,5 +1,4 @@
 #include "FileHandler.h"
-#include "../Exceptions/Exceptions.h"
 
 InputFileHandler::InputFileHandler(const std::string &pPath): FileHandler() {
     inPath = pPath;

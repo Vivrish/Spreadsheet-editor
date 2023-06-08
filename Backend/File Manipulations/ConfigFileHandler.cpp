@@ -23,8 +23,7 @@ void ConfigFileHandler::generateMap() {
 
 
 void ConfigFileHandler::checkMap() {
-    if (conf.count("NAME_OF_CREATED_TABLE") == 0 or
-        conf.count("PADDING") == 0 or
+    if (conf.count("PADDING") == 0 or
         conf.count("TABLE_SIZE") == 0 or
         conf.count("CELL_SIZE") == 0)
         throw BadConfigException();

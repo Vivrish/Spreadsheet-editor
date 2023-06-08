@@ -45,4 +45,6 @@ class InvalidCommandException: public std::exception {};
 
 class BadConfigException: public std::exception {};
 
+class FormatDataMismatchException: public std::exception {};
+
 #endif //SEMESTRALWORK_EXCEPTIONS_H

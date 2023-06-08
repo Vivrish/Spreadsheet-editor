@@ -39,6 +39,39 @@ void CommandHandler::listen() {
             cout << "That's too big of a number for a cell. Try again" << endl;
             continue;
         }
+        catch (IncorrectAmountOfArgumentsException &) {
+            cout << "Unable to calculate one of the cells. Check data types and syntax" << endl;
+            continue;
+        }
+        catch (FileIsNotOpenedException &) {
+            cout << "No such file exist in the directory. Try again" << endl;
+            continue;
+        }
+        catch (CannotCreateTheFileException &) {
+            cout << "Cannot create file with such path. Try again" << endl;
+            continue;
+        }
+        catch (LoopException &) {
+            cout << "You have a reference loop among the cells. Find and resolve it" << endl;
+            continue;
+        }
+        catch (MismatchedParenthesisException &) {
+            cout << "You messed up some parentheses. Find and resolve it" << endl;
+            continue;
+        }
+        catch (FormatDataMismatchException &) {
+            cout << "Format does not make sense for data type in one of the cells. Find and resolve it" << endl;
+            continue;
+        }
+        catch (invalid_argument &) {
+            cout << "Unable to calculate one of the cells. Check data types and syntax" << endl;
+            continue;
+        }
+        catch (...) {
+            cout << "Something went wrong. Try again" << endl;
+            continue;
+        }
+
         cout << "Command has been executed successfully. Nice job" << endl;
 
     }

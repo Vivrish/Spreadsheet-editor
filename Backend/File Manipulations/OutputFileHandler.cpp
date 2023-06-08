@@ -3,14 +3,14 @@
 
 using namespace std;
 
-OutputFileHandler::OutputFileHandler(const std::string & pPath): FileHandler() {
+OutputFileHandler::OutputFileHandler(const std::string & pPath) {
     outPath = pPath;
 }
 
 
 void OutputFileHandler::create() {
     outFile.open(outPath, ofstream::out);
-    if (outFile.is_open())
+    if (not outFile.is_open())
         throw CannotCreateTheFileException();
 }
 

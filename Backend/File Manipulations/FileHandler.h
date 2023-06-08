@@ -8,13 +8,7 @@
 
 #include "../Exceptions/Exceptions.h"
 
-class FileHandler {
-public:
-    std::unordered_map<std::string, std::string> constants;
-
-    FileHandler();
-};
-class InputFileHandler: public FileHandler{
+class InputFileHandler {
 public:
     InputFileHandler() = default;
 
@@ -25,11 +19,11 @@ public:
     void open();
 protected:
     std::string inPath;
-    std::fstream inFile;
+    std::ifstream inFile;
 
 };
 
-class OutputFileHandler: public FileHandler{
+class OutputFileHandler {
 public:
     OutputFileHandler() = default;
     explicit OutputFileHandler(const std::string & pPath);

@@ -20,9 +20,13 @@ int execute() {
         commandHandler.listen();
     }
     catch (BadConfigException &) {
-        cout << "Config format is invalid. I'll remind you that Config.txt should contain four key:'value' pairs."
-                "Do not change key signatures (NAME_OF_CREATED_TABLE, PADDING, TABLE_SIZE, CELL_SIZE)."
+        cout << "Config format is invalid. I'll remind you that Config.txt should contain three key:'value' pairs."
+                "Do not change key signatures (PADDING, TABLE_SIZE, CELL_SIZE)."
                 "Provide positive integers for TABLE_SIZE and CELL_SIZE no more than 10000 and 100 accordingly" << endl;
+    }
+    catch (...) {
+        cout << "Unexpected behaviour. Exiting the program" << endl;
+        return 0;
     }
 
 
@@ -32,6 +36,5 @@ int execute() {
 }
 
 int main() {
-    testAll();
-    return 0;
+    return execute();
 }
