@@ -366,18 +366,29 @@ std::shared_ptr<ASTNode> StringParser::getAST() const {
 
 
 void replaceReferencesWithValues(std::string & target, std::queue<std::string> & values) {
-    regex pattern(R"(\b(\d+:\d+)\b)");
-    smatch match;
-
-
-    while (not values.empty()) {
-        if (regex_search(target, match, pattern)) {
-            if (not insideQuotations(target, (int) match.position())) {
-                target.replace(match.position(), match.length(), values.front());
-            }
+    regex pattern("^\\d+:\\d+$");
+    vector<string> splitTarget = split(target,' ', '\"');
+    string output;
+    bool first = true;
+    for (const string & el: splitTarget) {
+        if (not first) {
+            output += " ";
+        }
+        first = false;
+        if (regex_match(el, pattern)) {
+            if (values.empty())
+                throw ReferenceMismatchException();
+            output += values.front();
             values.pop();
         }
-        else throw ReferenceMismatchException();
+        else {
+            output += el;
+        }
     }
+
+    if (not values.empty())
+        throw ReferenceMismatchException();
+
+    target = output;
 }
 

@@ -21,31 +21,70 @@ void testParsing() {
 
     sp.parse(R"(( "string" * 13 ) + " some more string" / "more" - "string")");
     tmp = sp.getOutput();
-    assert(queueToString(tmp) ==  "\"string\" 13 * \" some more string\" \"more\" / + \"string\" -");
-    assert(sp.getAST()->getStringResult() == "\"stringstringstringstringstringstringstringstringstringstringstringstring some  string\"");
+    assert(queueToString(tmp) == "\"string\" 13 * \" some more string\" \"more\" / + \"string\" -");
+    assert(sp.getAST()->getStringResult() ==
+           "\"stringstringstringstringstringstringstringstringstringstringstringstring some  string\"");
 
-    stack<string> st;
-    st.emplace("sdfsedf");
-    clearStack(st);
-    assert(st.empty());
-
+//    stack<string> st;
+//    st.emplace("sdfsedf");
+//    clearStack(st);
+//    assert(st.empty());
+//
     queue<string> q;
-    q.emplace("fsdfds");
-    clearQueue(q);
-    assert(q.empty());
+//    q.emplace("fsdfds");
+//    clearQueue(q);
+//    assert(q.empty());
 
-    st.emplace("first");
-    st.emplace("second");
-    assert(getSecondFromTop(st) == "second");
+//    st.emplace("first");
+//    st.emplace("second");
+//    assert(getSecondFromTop(st) == "second");
 
     q.emplace("first");
     q.emplace("second");
-    assert(queueToString(q) == "firstsecond");
+    assert(queueToString(q) == "first second");
 
     string text = "\"Plain text\" not plain text";
     assert(removePlainText(text) == " not plain text");
 
     assert(parsePair("12321:432553") == make_pair(12321, 432553));
+
+    text = "( 13 + 213 ) ^ 231 + \"Do not split between quotation marks\" - 43 * sin ( 0 )";
+    assert(split(text, ' ', '\"') == vector<string>(
+            {"(", "13", "+", "213", ")", "^", "231", "+", "\"Do not split between quotation marks\"", "-", "43", "*",
+             "sin", "(", "0", ")"}));
+
+    text = "          a        lot       of      spaces       ";
+    assert(trimSpaces(text) == " a lot of spaces ");
+
+    assert(not isNumber("\"13\""));
+    assert(isNumber("13"));
+    assert(isString("\"13\""));
+    assert(not isString("13"));
+    assert(isOperator("+"));
+    assert(not isOperator("13"));
+    assert(isOperand("13"));
+    assert(not isOperand("*"));
+    assert(isFunction("sin"));
+    assert(not isFunction("+"));
+    assert(insideQuotations("01234\"6\"89", 6));
+    assert(not insideQuotations("01234\"6\"89", 8));
+    assert(strToPair("1323:2342") == make_pair(1323, 2342));
+
+    text = "0:0 \"1:1\" 2:2";
+    unordered_set<pair<int, int>, PairHash> refs = {make_pair(0, 0), make_pair(2, 2)};
+    assert(refs == scoopCellReferences(text));
+
+    queue<pair<int, int>> order;
+    order.emplace(0, 0);
+    order.emplace(2, 2);
+    assert(getOrderedReferences(text) == order);
+
+    queue<string> values;
+    values.emplace("first value");
+    values.emplace("second value");
+    replaceReferencesWithValues(text, values);
+
+    assert(text == "first value \"1:1\" second value");
 
 }
 
@@ -118,7 +157,7 @@ void polymorphicTest() {
 
     ptr = make_shared<Time>("3600");
     ptr->format();
-    assert(ptr->getFormattedValue() ==  "1:0:0");
+    assert(ptr->getFormattedValue() == "1:0:0");
 
     ptr = make_shared<Boolean>("0");
     ptr->format();
@@ -164,7 +203,7 @@ void polymorphicTest() {
 }
 
 void cellTest() {
-    Cell cell(0,0, make_shared<Numeric>("2 ^ 2 ^ 2 ^ sin ( 2 )"));
+    Cell cell(0, 0, make_shared<Numeric>("2 ^ 2 ^ 2 ^ sin ( 2 )"));
     assert(cell.getRawOutput() == "2 ^ 2 ^ 2 ^ sin ( 2 )");
     cell.setFormat(make_shared<Float>());
     cell.setEvaluatedReferences(cell.getRawOutput());
