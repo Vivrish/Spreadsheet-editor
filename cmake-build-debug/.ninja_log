@@ -1,9 +1,0 @@
-# ninja log v5
-924	1842	1684766808533815310	CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/CSVFileHandler.cpp.o	aba2b263b62c104e
-1	829	1684766865914221016	CMakeFiles/SemestralWork.dir/main.cpp.o	501d6fba29d07752
-830	977	1684766866062222059	SemestralWork	1f9ab3b7835a8a8e
-0	54	1684768469432468632	build.ninja	e3c151e69f3e7cfe
-1242	1774	1684685894693278255	CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/FileHandler.cpp.o	477d57c43b428f81
-3120	3634	1684766810325828036	CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/OutputFileHandler.cpp.o	d58169b0b872d788
-1842	2415	1684766809105819372	CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/InputFileHandler.cpp.o	f38519d5c99b0469
-2415	3120	1684766809809824372	CMakeFiles/SemestralWork.dir/Backend/File_Manipulations/ConfigFileHandler.cpp.o	ebbb34e4a8fff810

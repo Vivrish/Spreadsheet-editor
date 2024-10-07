@@ -1,3 +1,0 @@
-C:/Users/Admin/CLionProjects/SemestralWork/cmake-build-debug/CMakeFiles/SemestralWork.dir
-C:/Users/Admin/CLionProjects/SemestralWork/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Admin/CLionProjects/SemestralWork/cmake-build-debug/CMakeFiles/rebuild_cache.dir
